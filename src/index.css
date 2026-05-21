@@ -791,21 +791,21 @@ body {
   line-height: 1.65;
 }
 
-/* Specific scaling for inline Arabic elements in LTR mode */
-.font-arabic:not(body) {
+/* Specific scaling for inline Arabic elements in LTR mode, unless an explicit text size class is specified */
+.font-arabic:not(body):not([class*="text-"]) {
   font-size: 1.15em;
   line-height: 1.4;
   vertical-align: baseline;
 }
 
 /* Exception for navigation and headers to maintain layout integrity */
-nav .font-arabic,
-header .font-arabic,
-h1 .font-arabic,
-h2 .font-arabic,
-h3 .font-arabic,
-.reviews-title .font-arabic {
-  font-size: 1.1em;
+nav .font-arabic:not([class*="text-"]),
+header .font-arabic:not([class*="text-"]),
+h1 .font-arabic:not([class*="text-"]),
+h2 .font-arabic:not([class*="text-"]),
+h3 .font-arabic:not([class*="text-"]),
+.reviews-title .font-arabic:not([class*="text-"]) {
+  font-size: 1.15em;
 }
 
 /* ── Global Scroll Anchor Offset ── */
@@ -814,21 +814,34 @@ section[id] {
 }
 
 /* ── Section Transition Bleeds ── */
+.section-dark,
+.section-light {
+  position: relative;
+}
+
 .section-dark + .section-light::before {
   content: '';
-  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 60px;
-  margin-top: -60px;
+  transform: translateY(-100%);
   background: linear-gradient(to bottom, rgba(10,8,6,0) 0%, var(--color-ivory) 100%);
   pointer-events: none;
+  z-index: 20;
 }
 .section-light + .section-dark::before {
   content: '';
-  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 60px;
-  margin-top: -60px;
-  background: linear-gradient(to bottom, var(--color-ivory) 0%, rgba(10,8,6,0) 100%);
+  transform: translateY(-100%);
+  background: linear-gradient(to bottom, rgba(10,8,6,0) 0%, var(--color-obsidian) 100%);
   pointer-events: none;
+  z-index: 20;
 }
 
 /* ── CTA Shimmer Sweep ── */
@@ -849,4 +862,159 @@ section[id] {
   width: 40%;
   background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.07) 50%, transparent 100%);
   animation: shimmerSweep 800ms ease 1200ms 1 forwards;
+}
+
+/* ── Final CTA Buttons (Mobile-First Elegant) ── */
+.cta-btn-primary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 18px 32px;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #720E23 0%, #8B1A2B 40%, #A8203A 60%, #8B1A2B 100%);
+  border: none;
+  border-radius: 60px;
+  cursor: pointer;
+  text-decoration: none;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0, 0.1, 1);
+  box-shadow: 
+    0 8px 32px rgba(114, 14, 35, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.cta-btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(
+    135deg,
+    rgba(201, 168, 76, 0.4) 0%,
+    rgba(201, 168, 76, 0.1) 50%,
+    rgba(201, 168, 76, 0.4) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.cta-btn-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+  transform: skewX(-15deg);
+  animation: ctaShine 4s ease-in-out infinite;
+}
+
+@keyframes ctaShine {
+  0%, 100% { left: -100%; }
+  50% { left: 150%; }
+}
+
+.cta-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 40px rgba(114, 14, 35, 0.55),
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.cta-btn-primary:hover::before {
+  opacity: 1;
+}
+
+.cta-btn-primary:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 
+    0 4px 16px rgba(114, 14, 35, 0.3),
+    0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.cta-btn-secondary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 18px 32px;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(247, 242, 232, 0.85);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  border-radius: 60px;
+  cursor: pointer;
+  text-decoration: none;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0, 0.1, 1);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.cta-btn-secondary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(201, 168, 76, 0.08) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.cta-btn-secondary:hover {
+  color: #C9A84C;
+  border-color: rgba(201, 168, 76, 0.5);
+  background: rgba(201, 168, 76, 0.06);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.25),
+    0 0 20px rgba(201, 168, 76, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.cta-btn-secondary:hover::before {
+  opacity: 1;
+}
+
+.cta-btn-secondary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+@media (min-width: 640px) {
+  .cta-btn-primary,
+  .cta-btn-secondary {
+    padding: 20px 40px;
+    font-size: 13px;
+  }
 }

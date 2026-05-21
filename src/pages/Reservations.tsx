@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Calendar, Clock, Users, Cake, Heart, Briefcase, PartyPopper, Gem, Anchor, Star } from 'lucide-react';
+import { Calendar, Clock, Users, Cake, Heart, Briefcase, Gem, PartyPopper, Anchor, Star } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Reservations() {
+  const { isArabic } = useLanguage();
   const today = new Date();
   const [currentDate, setCurrentDate] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
   
@@ -25,9 +27,9 @@ export default function Reservations() {
 
   const times = ['6:00 PM', '6:30 PM', '7:00 PM', '7:30 PM', '8:00 PM', '8:30 PM', '9:00 PM'];
   const occasions = [
-    { name: 'Anniversary', ar: 'استذكار', icon: Heart },
+    { name: 'Anniversary', ar: 'ذكرى', icon: Heart },
     { name: 'Birthday', ar: 'عيد ميلاد', icon: Cake },
-    { name: 'Business', ar: 'أعمال', icon: Briefcase },
+    { name: 'Business', ar: 'عشاء عمل', icon: Briefcase },
     { name: 'Proposal', ar: 'خطوبة', icon: Gem },
     { name: 'Celebration', ar: 'احتفال', icon: PartyPopper },
   ];
@@ -44,7 +46,7 @@ export default function Reservations() {
     const dateToCheck = new Date(currentYear, currentDate.getMonth(), day);
     const todayCheck = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     
-    if (dateToCheck < todayCheck) return; // Past dates are not allowed
+    if (dateToCheck < todayCheck) return;
 
     setSelectedDate(day);
     setSelectedMonth(currentDate.getMonth());
@@ -68,21 +70,21 @@ export default function Reservations() {
   };
 
   return (
-    <div className="shared-pattern-bg min-h-screen text-[#E8E8E8] font-sans selection:bg-[#C9A84C] selection:text-[#0A0806] relative">
+    <div className="shared-pattern-bg min-h-screen text-[#E8E8E8] font-sans selection:bg-[#C9A84C] selection:text-[#0A0806] relative" dir={isArabic ? 'rtl' : 'ltr'}>
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 pt-32">
         {/* Page Header */}
         <div className="flex flex-col items-center text-center mb-12">
           <span className="font-display text-[14px] text-[#C9A84C] tracking-[0.28em] uppercase mb-3 flex items-center justify-center gap-3">
-            <span>THE DAMMAM CORNICHE</span>
+            <span>{isArabic ? 'كورنيش الدمام، السعودية' : 'THE DAMMAM CORNICHE'}</span>
             <span className="text-[10px] opacity-60">·</span>
-            <span className="font-arabic text-[22px] tracking-normal pt-1" dir="rtl">احجز طاولتك</span>
+            <span className={isArabic ? 'font-arabic text-[22px] tracking-normal pt-1' : 'font-display text-[12px] tracking-[0.2em]'} dir={isArabic ? 'rtl' : 'ltr'}>{isArabic ? 'احجز طاولتك' : 'RESERVE YOUR TABLE'}</span>
           </span>
           <h1 className="font-serif italic font-light text-[42px] md:text-[56px] text-white leading-[1.1] mb-4">
-            Reserve Your Evening
+            {isArabic ? 'احجز سهرتك' : 'Reserve Your Evening'}
           </h1>
           <p className="font-serif italic text-[24px] text-[#8A7A62]">
-            A table on the Corniche is waiting. Tell us when.
+            {isArabic ? 'طاولة على الكورنيش في انتظارك. أخبرنا متى.' : "A table on the Corniche is waiting. Tell us when."}
           </p>
           <div className="w-[40px] h-[1px] bg-[#C9A84C] opacity-50 mx-auto mt-5 mb-9"></div>
         </div>
@@ -93,7 +95,7 @@ export default function Reservations() {
             
             {/* Choose Your Evening */}
             <div className="bg-[#141008] border-[0.5px] border-[rgba(201,168,76,0.12)] rounded-lg p-8">
-              <h3 className="font-display text-[12px] text-[#C9A84C] tracking-[0.22em] uppercase mb-8">Choose Your Evening</h3>
+              <h3 className="font-display text-[12px] text-[#C9A84C] tracking-[0.22em] uppercase mb-8">{isArabic ? 'اختر سهرتك' : "Choose Your Evening"}</h3>
               
               <div className="flex items-center justify-between mb-6 px-2">
                 <button onClick={handlePrevMonth} className="text-[#C9A84C] hover:text-white transition-colors p-2 w-11 h-11 flex items-center justify-center cursor-pointer">
@@ -144,7 +146,7 @@ export default function Reservations() {
 
             {/* When Shall We Expect You */}
             <div className="bg-[#141008] border-[0.5px] border-[rgba(201,168,76,0.12)] rounded-lg p-8">
-              <h3 className="font-display text-[12px] text-[#C9A84C] tracking-[0.18em] uppercase mb-8">When Shall We Expect You</h3>
+              <h3 className="font-display text-[12px] text-[#C9A84C] tracking-[0.18em] uppercase mb-8">{isArabic ? 'متى نتوقع حضورك' : 'When Shall We Expect You'}</h3>
               <div className="flex flex-wrap gap-3">
                 {times.map(time => (
                   <button
@@ -164,7 +166,7 @@ export default function Reservations() {
 
             {/* Your Table For */}
             <div className="bg-[#141008] border-[0.5px] border-[rgba(201,168,76,0.12)] rounded-lg p-8">
-              <h3 className="font-display text-[12px] text-[#C9A84C] tracking-[0.22em] uppercase mb-8">Your Table For</h3>
+              <h3 className="font-display text-[12px] text-[#C9A84C] tracking-[0.22em] uppercase mb-8">{isArabic ? 'طاولتك لـ' : 'Your Table For'}</h3>
               <div className="flex items-center gap-6">
                 <button 
                   onClick={() => setGuests(Math.max(1, guests - 1))}
@@ -174,7 +176,7 @@ export default function Reservations() {
                 </button>
                 <div className="flex items-baseline gap-3 min-w-[48px] justify-center">
                   <span className="font-numbers text-[32px] font-light text-white leading-none">{guests}</span>
-                  <span className="font-serif italic text-[16px] text-[#8A7A62]">Guests</span>
+                  <span className="font-serif italic text-[16px] text-[#8A7A62]">{isArabic ? 'ضيوف' : 'Guests'}</span>
                 </div>
                 <button 
                   onClick={() => setGuests(guests + 1)}
@@ -187,7 +189,7 @@ export default function Reservations() {
 
             {/* So We Can Reach You */}
             <div className="bg-[#141008] border-[0.5px] border-[rgba(201,168,76,0.12)] rounded-lg p-8">
-              <h3 className="font-display text-[12px] text-[#C9A84C] tracking-[0.22em] uppercase mb-8">So We Can Reach You</h3>
+              <h3 className="font-display text-[12px] text-[#C9A84C] tracking-[0.22em] uppercase mb-8">{isArabic ? 'حتى نتمكن من التواصل معك' : 'So We Can Reach You'}</h3>
               <div className="flex flex-col gap-5">
                 <div className="relative group">
                   <input 
@@ -202,7 +204,7 @@ export default function Reservations() {
                     htmlFor="contact-name"
                     className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none transition-all duration-250 ease-in-out font-serif italic text-[16px] text-[rgba(212,196,160,0.35)] peer-focus:top-[14px] peer-focus:-translate-y-1/2 peer-focus:text-[11px] peer-focus:font-display peer-focus:uppercase peer-focus:tracking-[0.15em] peer-focus:text-[#C9A84C] peer-focus:not-italic peer-[:not(:placeholder-shown)]:top-[14px] peer-[:not(:placeholder-shown)]:-translate-y-1/2 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:font-display peer-[:not(:placeholder-shown)]:uppercase peer-[:not(:placeholder-shown)]:tracking-[0.15em] peer-[:not(:placeholder-shown)]:text-[#C9A84C] peer-[:not(:placeholder-shown)]:not-italic"
                   >
-                    Full Name
+                    {isArabic ? 'الاسم' : 'Full Name'}
                   </label>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -219,7 +221,7 @@ export default function Reservations() {
                       htmlFor="contact-email"
                       className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none transition-all duration-250 ease-in-out font-serif italic text-[16px] text-[rgba(212,196,160,0.35)] peer-focus:top-[14px] peer-focus:-translate-y-1/2 peer-focus:text-[11px] peer-focus:font-display peer-focus:uppercase peer-focus:tracking-[0.15em] peer-focus:text-[#C9A84C] peer-focus:not-italic peer-[:not(:placeholder-shown)]:top-[14px] peer-[:not(:placeholder-shown)]:-translate-y-1/2 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:font-display peer-[:not(:placeholder-shown)]:uppercase peer-[:not(:placeholder-shown)]:tracking-[0.15em] peer-[:not(:placeholder-shown)]:text-[#C9A84C] peer-[:not(:placeholder-shown)]:not-italic"
                     >
-                      Email Address
+                      {isArabic ? 'البريد الإلكتروني' : 'Email Address'}
                     </label>
                   </div>
                   <div className="relative group">
@@ -235,7 +237,7 @@ export default function Reservations() {
                       htmlFor="contact-phone"
                       className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none transition-all duration-250 ease-in-out font-serif italic text-[16px] text-[rgba(212,196,160,0.35)] peer-focus:top-[14px] peer-focus:-translate-y-1/2 peer-focus:text-[11px] peer-focus:font-display peer-focus:uppercase peer-focus:tracking-[0.15em] peer-focus:text-[#C9A84C] peer-focus:not-italic peer-[:not(:placeholder-shown)]:top-[14px] peer-[:not(:placeholder-shown)]:-translate-y-1/2 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:font-display peer-[:not(:placeholder-shown)]:uppercase peer-[:not(:placeholder-shown)]:tracking-[0.15em] peer-[:not(:placeholder-shown)]:text-[#C9A84C] peer-[:not(:placeholder-shown)]:not-italic"
                     >
-                      Phone Number
+                      {isArabic ? 'رقم الجوال' : 'Phone Number'}
                     </label>
                   </div>
                 </div>
@@ -250,8 +252,8 @@ export default function Reservations() {
             {/* Special Occasion */}
             <div className="bg-[#141008] border-[0.5px] border-[rgba(201,168,76,0.12)] rounded-lg p-8">
               <div className="mb-10">
-                <h3 className="font-display text-[22px] text-[#C9A84C] tracking-[0.25em] uppercase mb-4">Is This a Special Evening</h3>
-                <p className="font-serif italic text-[32px] text-[#8A7A62] leading-tight">We'll make sure it feels like one.</p>
+                <h3 className="font-display text-[22px] text-[#C9A84C] tracking-[0.25em] uppercase mb-4">{isArabic ? 'هل هذه سهرة مميزة' : 'Is This a Special Evening'}</h3>
+                <p className="font-serif italic text-[32px] text-[#8A7A62] leading-tight">{isArabic ? 'سنتأكد من أنها تبدو مميزة.' : "We'll make sure it feels like one."}</p>
               </div>
               
               <div className="flex flex-wrap gap-3">
@@ -269,7 +271,7 @@ export default function Reservations() {
                     >
                       <occ.icon size={22} strokeWidth={1.2} className={isSelected ? 'text-[#C9A84C] opacity-100' : 'text-[#C9A84C] opacity-60'} />
                       <div className="flex flex-col items-center gap-[2px]">
-                        <span className={`font-display text-[10px] tracking-[0.15em] uppercase ${isSelected ? 'text-[#C9A84C]' : 'text-[#D4C4A0]'}`}>{occ.name}</span>
+                        <span className={`font-display text-[10px] tracking-[0.15em] uppercase ${isSelected ? 'text-[#C9A84C]' : 'text-[#D4C4A0]'}`}>{isArabic ? occ.ar : occ.name}</span>
                         <span className={`font-arabic text-[14px] leading-none ${isSelected ? 'text-[rgba(201,168,76,0.9)]' : 'text-[rgba(201,168,76,0.6)]'}`} dir="rtl">{occ.ar}</span>
                       </div>
                     </button>
@@ -279,7 +281,7 @@ export default function Reservations() {
 
               <textarea 
                 className="w-full mt-6 rounded-[6px] border-[0.5px] border-[rgba(201,168,76,0.15)] bg-[rgba(201,168,76,0.03)] p-[14px] font-serif italic text-[16px] text-[#D4C4A0] placeholder-[rgba(212,196,160,0.35)] focus:outline-none focus:border-[rgba(201,168,76,0.4)] focus:bg-[rgba(201,168,76,0.05)] transition-colors resize-none"
-                placeholder="Any special requests, dietary needs, or details we should know?"
+                placeholder={isArabic ? 'أضف أي طلبات خاصة' : "Any special requests, dietary needs, or details we should know?"}
                 rows={3}
                 value={requests}
                 onChange={(e) => setRequests(e.target.value)}
@@ -288,14 +290,14 @@ export default function Reservations() {
 
             {/* Booking Summary */}
             <div className="bg-[rgba(201,168,76,0.04)] border-[0.5px] border-[rgba(201,168,76,0.18)] border-t-2 border-t-[rgba(201,168,76,0.4)] rounded-lg p-8 sticky top-32">
-              <h3 className="font-display text-[12px] text-[#C9A84C] tracking-[0.22em] uppercase mb-8">Your Evening At A Glance</h3>
+              <h3 className="font-display text-[12px] text-[#C9A84C] tracking-[0.22em] uppercase mb-8">{isArabic ? 'سهرتك في لمحة' : "Your Evening At A Glance"}</h3>
               
               <div className="flex flex-col">
                 {/* Date Row */}
                 <div className="flex justify-between items-center py-[12px] border-b border-[rgba(201,168,76,0.06)]">
                   <span className="flex items-center gap-3">
                     <Calendar size={14} className="text-[#C9A84C] opacity-50" />
-                    <span className="font-display text-[11px] tracking-[0.15em] text-[#8A7A62] uppercase">Date</span>
+                    <span className="font-display text-[11px] tracking-[0.15em] text-[#8A7A62] uppercase">{isArabic ? 'التاريخ' : 'Date'}</span>
                   </span>
                   <span className="font-serif text-[16px] text-white">
                     {displaySelectedMonth.substring(0, 3)} <span className="font-numbers">{selectedDate}</span>, <span className="font-numbers">{selectedYear}</span>
@@ -306,7 +308,7 @@ export default function Reservations() {
                 <div className="flex justify-between items-center py-[12px] border-b border-[rgba(201,168,76,0.06)]">
                   <span className="flex items-center gap-3">
                     <Clock size={14} className="text-[#C9A84C] opacity-50" />
-                    <span className="font-display text-[11px] tracking-[0.15em] text-[#8A7A62] uppercase">Time</span>
+                    <span className="font-display text-[11px] tracking-[0.15em] text-[#8A7A62] uppercase">{isArabic ? 'الوقت' : 'Time'}</span>
                   </span>
                   <span className="font-numbers text-[16px] text-white">
                     {selectedTime || '—'}
@@ -317,7 +319,7 @@ export default function Reservations() {
                 <div className="flex justify-between items-center py-[12px] border-b border-[rgba(201,168,76,0.06)]">
                   <span className="flex items-center gap-3">
                     <Users size={14} className="text-[#C9A84C] opacity-50" />
-                    <span className="font-display text-[11px] tracking-[0.15em] text-[#8A7A62] uppercase">Guests</span>
+                    <span className="font-display text-[11px] tracking-[0.15em] text-[#8A7A62] uppercase">{isArabic ? 'ضيوف' : 'Guests'}</span>
                   </span>
                   <span className="font-numbers text-[16px] text-white">
                     {guests}
@@ -328,10 +330,10 @@ export default function Reservations() {
                 <div className="flex justify-between items-center py-[12px]">
                   <span className="flex items-center gap-3">
                     <Star size={14} className="text-[#C9A84C] opacity-50" />
-                    <span className="font-display text-[11px] tracking-[0.15em] text-[#8A7A62] uppercase">Occasion</span>
+                    <span className="font-display text-[11px] tracking-[0.15em] text-[#8A7A62] uppercase">{isArabic ? 'المناسبة' : 'Occasion'}</span>
                   </span>
                   <span className={`font-serif text-[16px] ${occasion ? 'text-[#C9A84C]' : 'text-white'}`}>
-                    {occasion || 'None'}
+                    {occasion || (isArabic ? 'لا يوجد' : 'None')}
                   </span>
                 </div>
               </div>
@@ -340,7 +342,7 @@ export default function Reservations() {
                 onClick={handleConfirm}
                 className="relative overflow-hidden w-full bg-[#8B1A2B] hover:bg-[#7a1625] text-white font-display text-[12px] tracking-[0.2em] uppercase h-[54px] rounded-[4px] mt-5 transition-all duration-300 active:scale-95 group cursor-pointer"
               >
-                <span className="relative z-10">CONFIRM YOUR EVENING →</span>
+                <span className="relative z-10">{isArabic ? 'تأكيد ودفع ←' : "CONFIRM YOUR EVENING →"}</span>
                 <motion.div 
                   initial={{ x: '-100%' }}
                   animate={{ x: '100%' }}
@@ -350,7 +352,7 @@ export default function Reservations() {
               </button>
               
               <p className="font-serif italic text-[18px] text-[rgba(138,122,98,0.7)] text-center mt-[16px]">
-                By confirming you agree to our reservation terms.
+                {isArabic ? 'بتأكيدك فإنك توافق على شروط الحجز.' : "By confirming you agree to our reservation terms."}
               </p>
             </div>
 
@@ -382,7 +384,7 @@ export default function Reservations() {
                 transition={{ duration: 0.8, delay: 0.4 }}
                 className="font-serif italic font-light text-[32px] text-white leading-tight mb-2"
               >
-                Your evening is confirmed.
+                {isArabic ? 'تم تأكيد سهرتك.' : "Your evening is confirmed."}
               </motion.h2>
 
               <motion.p 
@@ -407,18 +409,18 @@ export default function Reservations() {
                 </svg>
 
                 <p className="font-display text-[12px] text-[#C9A84C] tracking-[0.2em] uppercase mb-8">
-                  {displaySelectedMonth.substring(0, 3)} <span className="font-numbers">{selectedDate}</span> · <span className="font-numbers">{selectedTime}</span> · <span className="font-numbers">{guests}</span> Guests
+                  {displaySelectedMonth.substring(0, 3)} <span className="font-numbers">{selectedDate}</span> · <span className="font-numbers">{selectedTime}</span> · <span className="font-numbers">{guests}</span> {isArabic ? 'ضيوف' : 'Guests'}
                 </p>
 
                 <p className="font-serif italic text-[16px] text-[#8A7A62] max-w-sm mx-auto mb-10">
-                  A confirmation has been sent to your email. We look forward to your evening.
+                  {isArabic ? 'تم إرسال التأكيد إلى بريدك الإلكتروني. نحن نتطلع إلى سهرتك.' : "A confirmation has been sent to your email. We look forward to your evening."}
                 </p>
 
                   <button 
                     onClick={() => setIsConfirmed(false)}
                     className="bg-transparent border border-[#C9A84C] text-[#C9A84C] font-display text-[11px] tracking-[0.2em] uppercase h-[40px] px-8 rounded-[4px] transition-all hover:bg-[rgba(201,168,76,0.1)] active:scale-95 cursor-pointer"
                   >
-                  ADD TO CALENDAR
+                  {isArabic ? 'أضف إلى التقويم' : 'ADD TO CALENDAR'}
                 </button>
               </motion.div>
             </div>

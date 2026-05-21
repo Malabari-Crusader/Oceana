@@ -1,9 +1,10 @@
-import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { ChevronDown, ArrowRight, Coffee, Utensils, Sparkles, ChevronRight } from 'lucide-react';
+import { Coffee, Sparkles } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
-import ScrollTimeline from '../components/ScrollTimeline';
+import CinematicEnter from '../components/CinematicEnter';
+import VibrantCTA from '../components/VibrantCTA';
+import { useLanguage } from '../context/LanguageContext';
 
 const ChopstickIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -31,6 +32,7 @@ const formatOceanaText = (text: string) => {
 
 export default function Story() {
   const { scrollYProgress } = useScroll();
+  const { isArabic } = useLanguage();
 
   return (
     <div className="bg-[#FFF8F3] text-[#3A1C1C] selection:bg-[#A70000] selection:text-white overflow-hidden font-sans">
@@ -41,15 +43,14 @@ export default function Story() {
       <HeroSection />
       <PioneerPositioning />
       <ThreeCultures />
-      <FusionPhilosophy />
-      <ScrollTimeline />
       <ReviewsSection />
-      <CallToAction />
+      <VibrantCTA />
     </div>
   );
 }
 
 function HeroSection() {
+  const { isArabic } = useLanguage();
   const ref = useRef(null);
   const waveRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -130,11 +131,11 @@ function HeroSection() {
           className="flex flex-col text-center w-full mt-20"
         >
           <h1 className="font-serif italic text-[clamp(28px,6vw,42px)] font-light text-white/85 tracking-tight leading-[1.2] drop-shadow-xl">
-            Thirty years ago,<br/>
-            three worlds sat down together.
+            {isArabic ? 'من ثلاثين سنة،' : 'Thirty years ago,'}<br/>
+            {isArabic ? 'ثلاث عوالم قعدوا سوا.' : 'three worlds sat down together.'}
           </h1>
           <h2 className="font-serif italic text-[clamp(44px,11vw,72px)] text-[#C9A84C] font-normal mt-[12px] drop-shadow-lg">
-            They haven't left.
+            {isArabic ? 'لحد الحين ما طلعوا.' : "They haven't left."}
           </h2>
         </motion.div>
       </motion.div>
@@ -157,31 +158,33 @@ function HeroSection() {
 }
 
 function PioneerPositioning() {
-  const paragraphs = [
-    "Oceana was not built in a day, but in three decades of sunset watching on the Dammam Corniche.",
-    "This strip of coastline has seen the city transform, and we have been here for it all. From the first families who gathered by the water to the latest corporate leaders who shape the future—every story has passed through our doors.",
-    "The Dammam Corniche isn't just a view; it's our witness. It connects the desert dunes to the Persian Gulf, and in that same spirit, we connect the spices of the East, the techniques of the Subcontinent, and the soul of Arabia.",
-    "For thirty years, we haven't just served dinner. We have curated the very energy of the Corniche."
-  ];
+  const { isArabic } = useLanguage();
+  const paragraphs = isArabic
+    ? [
+        "أوشيانا ما انبنت في يوم، لا، في ثلاثين سنة نتفرج على الغروب على كورنيش الدمام.",
+        "هالشريط الساحلي شاف المدينة تتغير، واحنا هنا من البداية للنهاية. من أول عوائل اجتمعت عند المية، لأحدث قادة الأعمال اللي يشكلون المستقبل — كل قصة مرت من أبوابنا."
+      ]
+    : [
+        "Oceana was not built in a day, but in three decades of sunset watching on the Dammam Corniche.",
+        "This strip of coastline has seen the city transform, and we have been here for it all. From the first families who gathered by the water to the latest corporate leaders who shape the future—every story has passed through our doors."
+      ];
 
   return (
-    <section id="positioning" className="section-light relative py-32 px-4 w-full flex flex-col items-center bg-[#F7F2E8]">
-      {/* Texture Background - Minimal opacity for clear text background */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.015]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'80\' height=\'80\' viewBox=\'0 0 80 80\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M40 0C40 22.0914 22.0914 40 0 40C22.0914 40 40 57.9086 40 80C40 57.9086 57.9086 40 80 40C57.9086 40 40 22.0914 40 0Z\' fill=\'%23C9A84C\' fill-opacity=\'1\' fill-rule=\'evenodd\'/%3E%3C/svg%3E")', backgroundSize: '80px 80px' }}></div>
-
+    <section id="positioning" className="section-light relative pt-[100px] pb-32 px-4 w-full flex flex-col items-center bg-[#F5F0E6] scroll-mt-[72px]">
       <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, filter: 'blur(10px)' }}
+        whileInView={{ opacity: 1, filter: 'blur(0px)' }}
         viewport={{ once: true, margin: "-100px" }}
-        className="text-center mb-16 flex flex-col items-center px-6"
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        className="text-center flex flex-col items-center px-4 md:px-8 w-full max-w-[1200px]"
       >
-        <h2 className="font-display text-[13px] tracking-[0.28em] text-[#8B1A2B] mb-2 font-normal uppercase">
-          Pioneering the Culinary Arts
+        <h2 className="font-serif font-bold text-[36px] sm:text-[48px] md:text-[64px] lg:text-[80px] tracking-tight leading-none text-[#5A1A1A] mb-[61px] uppercase">
+          Pioneering the<br/>Culinary Arts
         </h2>
-        <p className="font-arabic text-[14px] text-[#8B1A2B]/70 mb-8 font-medium" dir="rtl">
+        <div className="w-[120px] md:w-[200px] h-[1px] bg-[#5A1A1A] mb-[38px]"></div>
+        <p className="text-[28px] md:text-[36px] lg:text-[44px] text-[#5A1A1A] mb-[100px] font-medium" dir="rtl" lang="ar" style={{ fontFamily: "'Noto Naskh Arabic', serif" }}>
           ريادة فنون الطهي
         </p>
-        <div className="w-[60px] h-[1.5px] bg-[#C9A84C]/60"></div>
       </motion.div>
 
       <div className="flex flex-col gap-12 text-[#1A1410] text-[22px] leading-[1.8] text-left md:text-center max-w-[620px] w-full mx-auto relative z-10">
@@ -198,99 +201,89 @@ function PioneerPositioning() {
           </motion.p>
         ))}
         
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="mt-10 text-center flex flex-col items-center"
-        >
-          <div className="w-[60px] h-[1px] bg-[#C9A84C]/50 mb-8"></div>
-          <p className="font-serif italic text-[38px] text-[#C9A84C] font-medium">
-            Enter {formatOceanaText("Oceana.")}
-          </p>
-          <p className="font-arabic text-[20px] text-[#C9A84C]/80 mt-[12px] font-medium" dir="rtl">
-            أهلاً بكم في الأوقيانا
-          </p>
-        </motion.div>
+        <CinematicEnter />
       </div>
     </section>
   );
 }
 
 function ThreeCultures() {
+  const { isArabic } = useLanguage();
   return (
-    <section id="cultures" className="section-dark pt-14 pb-16 md:pb-32 px-4 max-w-7xl mx-auto bg-[#0A0806]">
-      {/* Ornamental Divider */}
-      <div className="flex items-center justify-center gap-4 text-[#C9A84C]/40 mb-14 select-none">
-        <span className="w-8 h-[1px] bg-current"></span>
-        <span className="text-[10px]">◆</span>
-        <span className="w-8 h-[1px] bg-current"></span>
-      </div>
+    <section id="cultures" className="section-dark pt-14 pb-16 md:pb-32 bg-[#0A0806]">
+      <div className="max-w-7xl mx-auto px-4">
+        {/* Ornamental Divider */}
+        <div className="flex items-center justify-center gap-4 text-[#C9A84C]/40 mb-14 select-none">
+          <span className="w-8 h-[1px] bg-current"></span>
+          <span className="text-[10px]">◆</span>
+          <span className="w-8 h-[1px] bg-current"></span>
+        </div>
 
-      <div className="text-center mb-24 max-w-3xl mx-auto">
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="font-display font-normal text-[13px] tracking-[0.2em] text-[#C9A84C] mb-8"
-        >
-          WHERE THREE TRADITIONS CONVERGE
-        </motion.h2>
-        <motion.p 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="font-serif italic text-[24px] text-[#C9A84C] mb-10 mt-4"
-        >
-          Not by accident. By intention.
-        </motion.p>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="font-serif text-[22px] md:text-[24px] text-[#F7F2E8] leading-[1.8] font-medium"
-        >
-          {formatOceanaText("The Dammam Corniche has always been a place of arrival. Ships from the East, spices from the Subcontinent, and the hospitality of the desert all meet at the water's edge. At Oceana, we didn't invent this convergence—we simply gave it a seat at the table.")}
-        </motion.p>
-      </div>
+        <div className="text-center mb-24 max-w-3xl mx-auto flex flex-col gap-8">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="font-display font-normal text-[13px] tracking-[0.2em] text-[#C9A84C] mb-4"
+          >
+            {isArabic ? 'وين تلتقي ثلاث تقاليد' : 'WHERE THREE TRADITIONS CONVERGE'}
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="font-serif text-[22px] md:text-[24px] text-[#F7F2E8] leading-[1.8] font-medium"
+          >
+            {isArabic ? "كورنيش الدمام مو مجرد منظر، هو شاهدنا. يربط بر البر بالخليج، وبنفس الروح، احنا في أوشيانا نربط بهارات الشرق، وتقنيات شبه القارة، وروح الجزيرة." : formatOceanaText("The Dammam Corniche isn't just a view; it's our witness. It connects the desert dunes to the Persian Gulf, and in that same spirit, we at Oceana connect the spices of the East, the techniques of the Subcontinent, and the soul of Arabia.")}
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="font-serif text-[22px] md:text-[24px] text-[#F7F2E8] leading-[1.8] font-medium"
+          >
+            {isArabic ? "من ثلاثين سنة، أوشيانا مو بس تقدم عشاء. احنا نصنع طاقة الكورنيش." : formatOceanaText("For thirty years, Oceana hasn't just served dinner. We have curated the very energy of the Corniche.")}
+          </motion.p>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 h-auto md:h-[600px]">
-        <CultureCard 
-          title="THE SPIRIT OF INDIA"
-          quote="Food is prayer. Spices are its language."
-          desc="Indian cuisine understands the sacred act of gathering. For centuries, kitchens have been temples. Recipes have been prayers. Each spice chosen not for flavor alone, but for meaning. At Oceana, we honor this. Our tandoors burn the same way they've burned for 300 years. Our spice blends follow recipes passed down through generations. This is not modern Indian cuisine. This is Indian tradition, elevated."
-          img="https://images.unsplash.com/photo-1585937421612-70a008356fbe?q=80&w=800&auto=format&fit=crop"
-          color="#C9A84C"
-          delay={0}
-          icon={Sparkles}
-        />
-        <CultureCard 
-          title="THE HEART OF ARABIA"
-          quote="Generosity is the highest virtue. Hospitality is how you show it."
-          desc="Arabic culture has built its identity around the gathering. The majlis. The coffee ceremony. The shared meal where strangers become family in the span of an evening. At Oceana, we learned from this. Every dish is meant to be shared. Every flavor is layered generously. Every guest arrives as a stranger and leaves as family. This is Arabian warmth, translated into cuisine."
-          img="https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?q=80&w=800&auto=format&fit=crop"
-          color="#C9A84C"
-          delay={0.2}
-          icon={Coffee}
-        />
-        <CultureCard 
-          title="THE SOUL OF CHINA"
-          quote="Perfect balance is the way. Fire and water, motion and stillness."
-          desc="Chinese philosophy teaches that greatness comes from understanding opposition. Hot and cold. Salt and sweet. Bold and delicate. Chinese cuisine is not decoration. It is philosophy made edible. Every technique learned over millennia. Every flavor considered. At Oceana, we embrace this discipline. Our wok work is meditation. Our spice balance is precision. Our food is philosophy. This is Chinese mastery, honored completely."
-          img="https://images.unsplash.com/photo-1552611052-33e04de081de?q=80&w=800&auto=format&fit=crop"
-          color="#C9A84C"
-          delay={0.4}
-          icon={ChopstickIcon}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 h-auto md:h-[600px]">
+          <CultureCard 
+            title={isArabic ? 'روح الهند' : 'THE SPIRIT OF INDIA'}
+            quote={isArabic ? 'الاكل عبادة. البهارات لغتها.' : 'Food is prayer. Spices are its language.'}
+            desc={isArabic ? "المطبخ الهندي يفهم معنى الاجتماع المقدّس. من قرون، المطابخ كانت معابد. الوصفات كانت صلوات. كل بهار مختار مو بس للنكهة،但对于 المعنى. في أوشيانا نكرّم هالشي. تندورنا يحترق نفس ما احترق من ٣٠٠ سنة. خلطات البهارات تتبع وصفات توارثتها الأجيال. هذا مو مطبخ هندي عصري. هذا تقليد هندي، مرتفع." : "Indian cuisine understands the sacred act of gathering. For centuries, kitchens have been temples. Recipes have been prayers. Each spice chosen not for flavor alone, but for meaning. At Oceana, we honor this. Our tandoors burn the same way they've burned for 300 years. Our spice blends follow recipes passed down through generations. This is not modern Indian cuisine. This is Indian tradition, elevated."}
+            img="https://images.unsplash.com/photo-1585937421612-70a008356fbe?q=80&w=800&auto=format&fit=crop"
+            color="#C9A84C"
+            delay={0}
+            icon={Sparkles}
+          />
+          <CultureCard 
+            title={isArabic ? 'قلب الجزيرة' : 'THE HEART OF ARABIA'}
+            quote={isArabic ? 'الكرم أعلى صفة. الضيافة هي طريقتك تظهرها.' : 'Generosity is the highest virtue. Hospitality is how you show it.'}
+            desc={isArabic ? "الثقافة العربية بنت هويتها على الاجتماع. المجلس. القهوة. الأكلة المشتركة اللي الغريب يصير عائلة في ليلة وحدة. في أوشيانا، تعلمنا من هالشي. كل طبق مصمم للمشاركة. كل نكهة طبقتها سخية. كل ضيف يجي غريب ويروح عائلة. هذا دفء عربي، مترجم لأكلة." : "Arabic culture has built its identity around the gathering. The majlis. The coffee ceremony. The shared meal where strangers become family in the span of an evening. At Oceana, we learned from this. Every dish is meant to be shared. Every flavor is layered generously. Every guest arrives as a stranger and leaves as family. This is Arabian warmth, translated into cuisine."}
+            img="/The Heart of Arabia.jpeg"
+            color="#C9A84C"
+            delay={0.2}
+            icon={Coffee}
+          />
+          <CultureCard 
+            title={isArabic ? 'روح الصين' : 'THE SOUL OF CHINA'}
+            quote={isArabic ? 'التوازن التام هو الطريق. نار ومية، حركة وسكون.' : 'Perfect balance is the way. Fire and water, motion and stillness.'}
+            desc={isArabic ? "الفلسفة الصينية تعلم أن العظمة تجي من فهم الأضداد. حار وبارد. مالح وحلو. جريء ورقيق. المطبخ الصيني مو زينة. هو فلسفة صارت أكل. كل تقنية تعلّمت على مر آلاف السنين. كل نكهة مدروسة. في أوشيانا، نعانق هذا الانضباط. الووك حقنا هو تأمل. توازن البهارات دقة. أكلنا فلسفة. هذا إتقان صيني، مكرّم بالكامل." : "Chinese philosophy teaches that greatness comes from understanding opposition. Hot and cold. Salt and sweet. Bold and delicate. Chinese cuisine is not decoration. It is philosophy made edible. Every technique learned over millennia. Every flavor considered. At Oceana, we embrace this discipline. Our wok work is meditation. Our spice balance is precision. Our food is philosophy. This is Chinese mastery, honored completely."}
+            img="https://images.unsplash.com/photo-1552611052-33e04de081de?q=80&w=800&auto=format&fit=crop"
+            color="#C9A84C"
+            delay={0.4}
+            icon={ChopstickIcon}
+          />
+        </div>
       </div>
     </section>
   );
 }
 
 function CultureCard({ title, quote, desc, img, color, delay, icon: Icon }: any) {
+  const { isArabic } = useLanguage();
   const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
@@ -372,7 +365,7 @@ function CultureCard({ title, quote, desc, img, color, delay, icon: Icon }: any)
               {title}
             </h3>
             <p className={`font-serif italic text-xl transition-all duration-500 ${isHovered ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`} style={{ color: color }}>
-              Tap to explore
+              {isArabic ? 'اضغط لاستكشاف' : 'Tap to explore'}
             </p>
           </div>
         </div>
@@ -407,119 +400,63 @@ function CultureCard({ title, quote, desc, img, color, delay, icon: Icon }: any)
   );
 }
 
-function FusionPhilosophy() {
-  const lines = [
-    { text: "Indian cuisine says: Food is sacred.", sizeClass: "text-[26px]", color: "text-[#1A1410]" },
-    { text: "Arabic tradition says: Sharing is sacred.", sizeClass: "text-[32px]", color: "text-[#1A1410]" },
-    { text: "Chinese philosophy says: Balance is sacred.", sizeClass: "text-[40px] italic", color: "text-[#C9A84C]" }
-  ];
 
-  return (
-    <section id="philosophy" className="section-light py-[120px] px-4 w-full flex flex-col items-center text-center relative bg-[#F7F2E8]">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="mb-[50px]"
-      >
-        <h2 className="font-display font-normal text-[13px] tracking-[0.28em] text-[#8B1A2B] uppercase leading-[1.8]">
-          WHY THESE THREE<br/>CONVERGE AT {formatOceanaText("OCEANA")}
-        </h2>
-      </motion.div>
-
-      <div className="flex flex-col w-full max-w-[580px]">
-        {lines.map((line, i) => (
-          <div key={i} className="flex flex-col items-center w-full">
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 1, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className={`font-serif leading-[2.2] w-full font-medium ${line.sizeClass} ${line.color}`}
-            >
-              {line.text}
-            </motion.p>
-            {i < lines.length - 1 && (
-              <div className="w-full h-[1px] bg-[#C9A84C]/20 my-4"></div>
-            )}
-          </div>
-        ))}
-      </div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.4 }}
-        className="mt-[60px] mb-[16px] max-w-[500px]"
-      >
-        <p className="font-serif text-[34px] md:text-[38px] font-bold text-[#1A1410] leading-tight">
-          {formatOceanaText("At Oceana, we honoured all three.")}
-        </p>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.5 }}
-        className="mt-[48px] font-serif italic text-[23px] md:text-[25px] text-[#4A3224] leading-[2.2] font-medium opacity-80"
-      >
-        <p>The result is not confusion.</p>
-        <p>The result is harmony.</p>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.6 }}
-        className="mt-[56px] font-serif italic text-[22px] md:text-[24px] text-[#4A3224] leading-[2.0] font-medium opacity-60"
-      >
-        <p>Three separate stories, one unified moment.</p>
-        <p>That moment happens on the Dammam Corniche.</p>
-      </motion.div>
-
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.7 }}
-        className="mt-[48px] font-serif font-bold italic text-[28px] md:text-[32px] text-[#C9A84C] opacity-100"
-      >
-        {formatOceanaText("That moment is dinner at Oceana.")}
-      </motion.p>
-    </section>
-  );
-}
 
 function ReviewsSection() {
-  const reviews = [
-    {
-      initial: "S",
-      avatarClass: "av-h",
-      name: "S. Al-Dossary",
-      tag: "Business Executive",
-      quote: "The only place in the Eastern Province where I bring my international clients. The fusion is seamless.",
-      stars: "★★★★★"
-    },
-    {
-      initial: "M",
-      avatarClass: "av-m",
-      name: "M. Abdulrahman",
-      tag: "Local Resident",
-      quote: "Thirty years on the Corniche, and they still surprise us. The Indian spices with Arabic generosity is a masterstroke.",
-      stars: "★★★★★"
-    },
-    {
-      initial: "F",
-      avatarClass: "av-z",
-      name: "Fatima R.",
-      tag: "Culinary Enthusiast",
-      quote: "I thought I knew what fusion meant until I ate here. The wok techniques applied to Gulf seafood are genuinely brilliant.",
-      stars: "★★★★★"
-    }
-  ];
+  const { isArabic } = useLanguage();
+  const reviews = isArabic
+    ? [
+        {
+          initial: "S",
+          avatarClass: "av-h",
+          name: "S. Al-Dossary",
+          tag: "رجل أعمال",
+          quote: "المكان الوحيد في الشرقية اللي أجيب فيه زبائني الدوليين. الدمج بين النكهات رهيب.",
+          stars: "★★★★★"
+        },
+        {
+          initial: "M",
+          avatarClass: "av-m",
+          name: "M. Abdulrahman",
+          tag: "من المنطقة",
+          quote: "ثلاثين سنة على الكورنيش، ولسه يبهرونا. البهارات الهندية مع الكرم العربي شيء عظيم.",
+          stars: "★★★★★"
+        },
+        {
+          initial: "F",
+          avatarClass: "av-z",
+          name: "Fatima R.",
+          tag: "عاشقة طبخ",
+          quote: "كنت أظن إني فاهمة الدمج، لين أكلت هني. تقنيات الووك مع مأكولات الخليج عبقري.",
+          stars: "★★★★★"
+        }
+      ]
+    : [
+        {
+          initial: "S",
+          avatarClass: "av-h",
+          name: "S. Al-Dossary",
+          tag: "Business Executive",
+          quote: "The only place in the Eastern Province where I bring my international clients. The fusion is seamless.",
+          stars: "★★★★★"
+        },
+        {
+          initial: "M",
+          avatarClass: "av-m",
+          name: "M. Abdulrahman",
+          tag: "Local Resident",
+          quote: "Thirty years on the Corniche, and they still surprise us. The Indian spices with Arabic generosity is a masterstroke.",
+          stars: "★★★★★"
+        },
+        {
+          initial: "F",
+          avatarClass: "av-z",
+          name: "Fatima R.",
+          tag: "Culinary Enthusiast",
+          quote: "I thought I knew what fusion meant until I ate here. The wok techniques applied to Gulf seafood are genuinely brilliant.",
+          stars: "★★★★★"
+        }
+      ];
 
   return (
     <section id="reviews" className="reviews section-dark">
@@ -529,9 +466,9 @@ function ReviewsSection() {
         viewport={{ once: true }}
         className="reviews-header"
       >
-        <span className="reviews-eyebrow">THE VERDICT</span>
+        <span className="reviews-eyebrow">{isArabic ? 'الحكم' : 'THE VERDICT'}</span>
         <h2 className="reviews-title">
-          Three Decades of <em>Excellence</em>
+          {isArabic ? 'ثلاثين سنة من' : 'Three Decades of'} <em>{isArabic ? 'التميز' : 'Excellence'}</em>
         </h2>
         <div className="reviews-rule"></div>
       </motion.div>
@@ -571,87 +508,12 @@ function ReviewsSection() {
         className="reviews-footer"
       >
         <div className="reviews-rating">
-          <span className="rating-stars">★★★★★</span> 4.9/5 from over 2,000 guests
+          <span className="rating-stars">★★★★★</span> {isArabic ? '٤٫٩/٥ من أكثر من ٢٠٠٠ ضيف' : '4.9/5 from over 2,000 guests'}
         </div>
-        <a href="#reservations" className="reviews-all">RESERVE A TABLE</a>
+        <a href="#reservations" className="reviews-all">{isArabic ? 'احجز طاولة' : 'RESERVE A TABLE'}</a>
       </motion.div>
     </section>
   );
 }
 
-function CallToAction() {
-  const pairs = [
-    { q: "Corporate dinner that needs to seal the deal?", a: "Oceana." },
-    { q: "Proposal that needs to be legendary?", a: "Oceana." },
-    { q: "Family celebration that deserves more than a meal?", a: "Oceana." },
-    { q: "Milestone evening that must be unforgettable?", a: "Oceana." }
-  ];
 
-  return (
-    <section id="cta" className="section-dark relative pt-[100px] pb-[100px] px-[28px] w-full bg-[#0A1628]">
-      {/* Texture Background - Extreme low opacity for maximum contrast */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.01]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'80\' height=\'80\' viewBox=\'0 0 80 80\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M40 0C40 22.0914 22.0914 40 0 40C22.0914 40 40 57.9086 40 80C40 57.9086 57.9086 40 80 40C57.9086 40 40 22.0914 40 0Z\' fill=\'%23C9A84C\' fill-opacity=\'1\' fill-rule=\'evenodd\'/%3E%3C/svg%3E")', backgroundSize: '80px 80px' }}></div>
-      
-      <div className="max-w-[700px] mx-auto text-center relative z-10 flex flex-col items-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mb-8 w-full"
-        >
-          <h2 className="font-display font-normal text-[13px] tracking-[0.28em] text-[#C9A84C] uppercase leading-[1.8] mb-[32px]">
-            WHEN THE CORNICHE MATTERS,<br/>{formatOceanaText("OCEANA")} IS WHERE IT HAPPENS.
-          </h2>
-          <div className="w-[60px] h-[1.5px] bg-[#C9A84C] mx-auto mb-[40px]"></div>
-          
-          <div className="flex flex-col text-left md:text-center w-full">
-            {pairs.map((pair, i) => (
-              <div key={i} className={`py-[32px] ${i !== pairs.length - 1 ? 'border-b border-[#C9A84C]/[0.15]' : ''} flex flex-col`}>
-                <p className="font-serif font-medium text-[24px] md:text-[26px] text-[#F7F2E8] mb-[10px] text-left md:text-center leading-[1.4]">
-                  {pair.q}
-                </p>
-                <div className="font-serif font-medium italic text-[32px] md:text-[38px] text-[#C9A84C] leading-[1.0] text-left md:text-center tracking-tight">
-                  {formatOceanaText(pair.a)}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="w-full border-t border-[#C9A84C]/[0.2] mt-[60px] pt-[40px]">
-            {/* Crisp footer text with high contrast */}
-            <p className="font-serif italic text-[22px] md:text-[24px] text-[#F7F2E8] leading-[2.0] text-center font-medium opacity-90">
-              This isn't modesty.<br/>
-              This isn't marketing speak.<br/>
-              This is what three decades on the Corniche have proven.
-            </p>
-          </div>
-        </motion.div>
-
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="flex flex-col md:flex-row w-full max-w-[460px] md:max-w-none justify-center gap-[24px] mt-12"
-        >
-          <Link 
-            to="/reservations" 
-            className="btn-primary btn-lux-gold flex items-center justify-center bg-[#8B1A2B] text-white h-[64px] w-full md:w-auto md:px-12 rounded-[3px] text-[14px] font-sans font-bold tracking-[0.2em] uppercase transition-all duration-300 active:scale-[0.98] shadow-xl shadow-black/40"
-          >
-            <span className="btn-text flex items-center">
-              RESERVE YOUR MOMENT <ChevronRight size={18} className="ml-2" />
-            </span>
-          </Link>
-          
-          <Link 
-            to="/menu" 
-            className="flex items-center justify-center bg-transparent border-[1.5px] border-[#C9A84C]/50 text-[#C9A84C] h-[64px] w-full md:w-auto md:px-12 rounded-[3px] text-[14px] font-sans font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:bg-[#C9A84C]/10 hover:border-[#C9A84C] active:scale-[0.98]"
-          >
-            EXPLORE OUR MENU <ArrowRight size={18} className="ml-2" />
-          </Link>
-        </motion.div>
-      </div>
-    </section>
-  );
-}

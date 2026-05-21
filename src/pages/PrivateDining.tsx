@@ -2,8 +2,10 @@ import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Star, Wine, ChefHat } from 'lucide-react';
 import { useState } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function PrivateDining() {
+  const { isArabic } = useLanguage();
   return (
     <div className="bg-[#1a1a1a] min-h-screen text-[#E8E8E8] font-sans selection:bg-[#E6B325] selection:text-[#1a1a1a] overflow-x-hidden">
       <HeroSection />
@@ -13,6 +15,7 @@ export default function PrivateDining() {
 }
 
 function HeroSection() {
+  const { isArabic } = useLanguage();
   return (
     <section className="relative min-h-[90vh] flex flex-col justify-center overflow-hidden pt-24 pb-24 px-4 md:px-8">
       {/* Atmospheric Background Layer */}
@@ -42,7 +45,7 @@ function HeroSection() {
           className="mb-8"
         >
           <span className="font-display text-[18px] text-[#C9A84C] tracking-[0.5em] uppercase flex items-center justify-center gap-4">
-            <span>BY INVITATION</span>
+            <span>{isArabic ? 'بالدعوة فقط' : 'BY INVITATION'}</span>
             <span className="text-[14px] opacity-60">·</span>
             <span className="font-arabic tracking-normal normal-case pt-1 text-[38px]">بالدعوة فقط</span>
           </span>
@@ -56,9 +59,9 @@ function HeroSection() {
           className="flex flex-col items-center justify-center mb-6"
         >
           <h1 className="font-serif italic font-light text-[54px] md:text-[72px] text-white leading-[1.1] mb-2 text-center flex flex-col">
-            <span>An Evening</span>
-            <span>That Belongs</span>
-            <span className="text-[#C9A84C]">Only to You.</span>
+            <span>{isArabic ? 'سهرة' : 'An Evening'}</span>
+            <span>{isArabic ? 'تخص' : 'That Belongs'}</span>
+            <span className="text-[#C9A84C]">{isArabic ? 'أنت بس.' : 'Only to You.'}</span>
           </h1>
           <span className="font-arabic text-[72px] text-[rgba(201,168,76,0.85)] mt-12 block leading-tight" dir="rtl">
             سهرة خاصة بك وحدك
@@ -87,14 +90,14 @@ function HeroSection() {
           className="flex flex-col items-center"
         >
           <div className="font-serif font-light italic text-[19px] text-[#D4C4A0] leading-[2.0] max-w-[480px] text-center mx-auto mb-6">
-            Where intimacy meets excellence.<br/>
-            Where celebration becomes ceremony.<br/>
-            Where the Corniche's finest tables belong to you.
+            {isArabic ? 'وين الحميمية تلتقي بالتميز.' : 'Where intimacy meets excellence.'}<br/>
+            {isArabic ? 'وين الاحتفال يصير طقس.' : 'Where celebration becomes ceremony.'}<br/>
+            {isArabic ? 'وين أفضل طاولات الكورنيش تخصك.' : "Where the Corniche's finest tables belong to you."}
           </div>
           
           <div className="font-serif italic text-[38px] text-[rgba(201,168,76,0.9)] text-center mt-16 flex items-center justify-center gap-10">
             <span className="opacity-40 text-[24px]">──</span>
-            <span>Not just exclusive. Exclusively yours.</span>
+            <span>{isArabic ? 'مو حكر. حكر عليك انت.' : 'Not just exclusive. Exclusively yours.'}</span>
             <span className="opacity-40 text-[24px]">──</span>
           </div>
         </motion.div>
@@ -110,7 +113,7 @@ function HeroSection() {
             to="/reservations" 
             className="group flex items-center justify-center bg-transparent border border-[rgba(201,168,76,0.6)] text-[#C9A84C] font-display text-[10px] tracking-[0.22em] uppercase h-[52px] min-w-[240px] px-8 rounded-sm transition-all duration-300 hover:bg-[rgba(201,168,76,0.08)] hover:border-[rgba(201,168,76,0.9)] active:scale-95"
           >
-            REQUEST YOUR EVENING →
+            {isArabic ? 'اطلب سهرتك ←' : 'REQUEST YOUR EVENING →'}
           </Link>
 
           <button 
@@ -119,7 +122,7 @@ function HeroSection() {
               document.getElementById('experience-cards')?.scrollIntoView({ behavior: 'smooth' });
             }}
           >
-            See What Awaits
+            {isArabic ? 'شوف اللي ينتظرك' : 'See What Awaits'}
           </button>
         </motion.div>
 
@@ -131,7 +134,7 @@ function HeroSection() {
           className="flex flex-col items-center gap-4 mt-24 mb-8"
         >
           <span className="font-display text-[9px] text-[#C9A84C] tracking-[0.22em] uppercase opacity-50">
-            Discover the Experience
+            {isArabic ? 'اكتشف التجربة' : 'Discover the Experience'}
           </span>
           <div className="w-px h-10 bg-[#C9A84C] animate-pulse opacity-60"></div>
         </motion.div>
@@ -142,32 +145,33 @@ function HeroSection() {
 }
 
 function ExperienceCards() {
+  const { isArabic } = useLanguage();
   const cards = [
     {
       id: 1,
       accent: "#C9A84C",
-      title: "The Setting",
+      title: isArabic ? "المكان" : "The Setting",
       icon: Star,
-      desc1: "Corniche views. Candlelit tables. Intimate acoustics. Unobstructed sunset access.",
-      desc2: "Your private moment, with the Gulf as backdrop.",
+      desc1: isArabic ? "إطلالة الكورنيش. طاولات بالشموع. صوتيات حميمية. غروب بدون عوائق." : "Corniche views. Candlelit tables. Intimate acoustics. Unobstructed sunset access.",
+      desc2: isArabic ? "لحظتك الخاصة، والخليج خلفية لك." : "Your private moment, with the Gulf as backdrop.",
       bgImage: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=800&auto=format&fit=crop"
     },
     {
       id: 2,
       accent: "#C9A84C",
-      title: "The Menu",
+      title: isArabic ? "قائمة الطعام" : "The Menu",
       icon: ChefHat,
-      desc1: "Custom curated menus spanning three traditions. Personal chef consultations. Bespoke wine pairings.",
-      desc2: "Flavors designed exclusively for your table.",
+      desc1: isArabic ? "قائمة طعام مكتوبة لطاولتك وحدها." : "A menu written for your table alone.",
+      desc2: isArabic ? "ثلاث عوالم طبخ، ليلة وحدة — كل طبق مختار عشان اللحظة اللي تبغى تخلقها." : "Three culinary worlds, one evening — every course chosen for the moment you are trying to create.",
       bgImage: "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=800&auto=format&fit=crop"
     },
     {
       id: 3,
       accent: "#C9A84C",
-      title: "The Service",
+      title: isArabic ? "الخدمة" : "The Service",
       icon: Wine,
-      desc1: "Dedicated waitstaff. Unobtrusive attention. Seamless execution from arrival to departure.",
-      desc2: "Hospitality that anticipates, never interrupts.",
+      desc1: isArabic ? "نادل مخصص. اهتمام بدون إزعاج. تنفيذ متقن من الوصول للمغادرة." : "Dedicated waitstaff. Unobtrusive attention. Seamless execution from arrival to departure.",
+      desc2: isArabic ? "ضيافة تستبق، ولا تقاطع." : "Hospitality that anticipates, never interrupts.",
       bgImage: "https://images.unsplash.com/photo-1583394838336-acd977736f90?q=80&w=800&auto=format&fit=crop"
     }
   ];
@@ -182,10 +186,10 @@ function ExperienceCards() {
           className="text-center mb-24 flex flex-col items-center"
         >
           <span className="font-display text-[10px] text-[#C9A84C] tracking-[0.3em] uppercase mb-6">
-            A CURATED JOURNEY
+            {isArabic ? 'رحلة منتقاة' : 'A CURATED JOURNEY'}
           </span>
           <h2 className="font-serif italic font-light text-[40px] md:text-[50px] text-white leading-tight mb-8">
-            The Oceana Experience
+            {isArabic ? 'تجربة أوشيانا' : 'The Oceana Experience'}
           </h2>
           <svg width="100" height="20" viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
             <line x1="0" y1="10" x2="40" y2="10" stroke="#C9A84C" strokeWidth="0.6" opacity="0.45"/>
@@ -227,10 +231,13 @@ function ExperienceCard({ card, index }: any) {
         style={{ backgroundImage: `url("${card.bgImage}")`, mixBlendMode: 'screen' }}
       ></div>
 
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0806] via-[#0A0806]/80 to-transparent z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0806] via-[#0A0806]/95 to-[#0A0806]/60 z-0"></div>
 
       {/* Card Content */}
       <div className="relative z-10 w-full h-full p-8 lg:p-10 flex flex-col justify-between transition-transform duration-500">
+        
+        {/* Subtle text backing for contrast */}
+        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[#0A0806]/95 to-transparent pointer-events-none z-[-1]"></div>
         
         {/* Header */}
         <div>
@@ -246,12 +253,12 @@ function ExperienceCard({ card, index }: any) {
         </div>
 
         {/* Text Body */}
-        <div className="mt-auto space-y-6">
-          <p className="font-serif text-[17px] text-[#D4C4A0] leading-[1.8] font-light group-hover:text-white transition-colors duration-500">
+        <div className="mt-auto space-y-5">
+          <p className="font-serif text-[19px] text-[#F0E6D3] leading-[1.7] font-light group-hover:text-white transition-colors duration-500 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
             {card.desc1}
           </p>
           
-          <p className="font-serif italic text-[15px] leading-snug drop-shadow-md text-[rgba(201,168,76,0.6)]">
+          <p className="font-serif italic text-[17px] leading-snug drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] text-[#C9A84C]/90">
             {card.desc2}
           </p>
         </div>

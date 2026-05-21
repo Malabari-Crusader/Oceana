@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useInView } from 'motion/react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Star } from 'lucide-react';
@@ -7,9 +7,11 @@ import { AnchorDivider } from '../components/AnchorDivider';
 import { DhowSceneBackground } from '../components/DhowSceneBackground';
 import { Helmet } from 'react-helmet-async';
 import ReviewsSection from '../components/ReviewsSection';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
+  const { isArabic } = useLanguage();
 
   const restaurantSchema = {
     "@context": "https://schema.org",
@@ -46,8 +48,8 @@ export default function Home() {
   return (
     <div className="bg-rich-black text-white selection:bg-burgundy selection:text-white">
       <Helmet>
-        <title>Oceana | Where Cultures Converge by the Dammam Corniche</title>
-        <meta name="description" content="A thirty-year legacy of culinary theater. Discover the sanctuary where the traditions of the East, Subcontinent, and Middle East converge on the historic Dammam Corniche." />
+        <title>{isArabic ? 'أوشيانا | وين تلتقي العوالم على كورنيش الدمام' : 'Oceana | Where Cultures Converge by the Dammam Corniche'}</title>
+        <meta name="description" content={isArabic ? 'إرث ثلاثين سنة من مسرح الطهي. اكتشف الملاذ اللي تتلاقى فيه تقاليد الشرق، شبه القارة، والشرق الأوسط على كورنيش الدمام التاريخي.' : 'A thirty-year legacy of culinary theater. Discover the sanctuary where the traditions of the East, Subcontinent, and Middle East converge on the historic Dammam Corniche.'} />
         <script type="application/ld+json">
           {JSON.stringify(restaurantSchema)}
         </script>
@@ -81,7 +83,7 @@ export default function Home() {
               }}
               className="text-gold text-xs md:text-sm font-bold uppercase mb-6 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] font-display tracking-widest"
             >
-              Dammam Corniche, Saudi Arabia — Est. 1994
+              {isArabic ? 'كورنيش الدمام، السعودية — من ١٩٩٤' : 'Dammam Corniche, Saudi Arabia — Est. 1994'}
             </motion.p>
             
             <div className="flex flex-col items-center mb-8">
@@ -95,7 +97,7 @@ export default function Home() {
                     }}
                     className="font-serif italic text-6xl md:text-8xl lg:text-9xl font-light tracking-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]"
                   >
-                    {word}
+                    {isArabic ? (i === 0 ? '' : 'أوشيانا') : word}
                   </motion.span>
                 ))}
               </div>
@@ -104,7 +106,7 @@ export default function Home() {
                   hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
                   visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 1.2, ease: "easeOut" } }
                 }}
-                className="font-arabic text-gold/90 text-[80px] md:text-[120px] lg:text-[160px] mt-4 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] leading-none"
+                className="font-arabic text-gold/90 !text-[120px] md:!text-[180px] lg:!text-[240px] mt-4 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] leading-none"
               >
                 أوشيانا
               </motion.span>
@@ -118,8 +120,8 @@ export default function Home() {
               className="mb-14"
             >
               <p className="text-xl md:text-3xl font-serif text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] font-medium tracking-wide leading-relaxed">
-                Thirty years of stories, served by the sea.<br />
-                Where <span className="text-crimson italic font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">three worlds converge</span>.
+                {isArabic ? 'ثلاثين سنة سوالف، على شط البحر.' : 'Thirty years of stories, served by the sea.'}<br />
+                {isArabic ? 'وين ' : 'Where '}<span className="text-crimson italic font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">{isArabic ? 'ثلاث عوالم تلتقي' : 'three worlds converge'}</span>.
               </p>
             </motion.div>
 
@@ -134,7 +136,7 @@ export default function Home() {
                 to="/reservations" 
                 className="btn-press bg-gold text-rich-black px-12 py-4 rounded-full text-sm font-display tracking-[0.2em] uppercase inline-flex items-center justify-center cursor-pointer shadow-[0_0_20px_rgba(201,168,76,0.3)] hover:shadow-[0_0_30px_rgba(201,168,76,0.5)] font-bold transition-all duration-300"
               >
-                <span className="btn-text">Reserve an Experience</span>
+                <span className="btn-text">{isArabic ? 'احجز طاولتك' : 'Reserve an Experience'}</span>
               </Link>
             </motion.div>
           </motion.div>
@@ -148,211 +150,312 @@ export default function Home() {
             <AnchorDivider />
           </motion.div>
         </div>
-      </section>      {/* Intro Quote */}
-      <section className="relative py-32 px-4 bg-[#140a0d] overflow-hidden flex items-center justify-center min-h-[90vh]">
+      </section>      {/* Intro Quote - Cinematic Legacy */}
+      <section className="relative py-24 md:py-32 px-4 bg-[#0E0A08] overflow-hidden flex items-center justify-center min-h-[90vh]">
         
-        {/* Background Visual Drawing - The 3 Cultures */}
-        <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center opacity-60 mt-8">
-          <svg viewBox="0 0 1400 700" className="absolute w-full h-full overflow-visible max-w-[1600px] preserve-3d">
+        {/* Ambient Background Glow */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[800px] md:h-[800px] bg-[radial-gradient(circle,rgba(201,168,76,0.06)_0%,transparent_70%)] animate-pulse" style={{ animationDuration: '6s' }} />
+        </div>
+
+        {/* Cinematic SVG - Three Cultures Converging */}
+        <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center">
+          <svg viewBox="0 0 1000 600" className="w-full h-full max-w-[1200px] max-h-[700px] overflow-visible" preserveAspectRatio="xMidYMid meet">
             <defs>
-              <filter id="glowGold" x="-30%" y="-30%" width="160%" height="160%">
-                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+              <filter id="glowSoft" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
                 <feMerge>
-                  <feMergeNode in="coloredBlur"/>
-                  <feMergeNode in="SourceGraphic"/>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
                 </feMerge>
               </filter>
+              <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#C9A84C" stopOpacity="0" />
+                <stop offset="20%" stopColor="#C9A84C" stopOpacity="0.6" />
+                <stop offset="80%" stopColor="#C9A84C" stopOpacity="0.6" />
+                <stop offset="100%" stopColor="#C9A84C" stopOpacity="0" />
+              </linearGradient>
+              <linearGradient id="pathGradientV" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#C9A84C" stopOpacity="0" />
+                <stop offset="20%" stopColor="#C9A84C" stopOpacity="0.5" />
+                <stop offset="80%" stopColor="#C9A84C" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="#C9A84C" stopOpacity="0" />
+              </linearGradient>
             </defs>
 
-            {/* Connecting Paths with refined curves */}
-            {/* East Path (Left) */}
+            {/* Connecting Paths - Elegant Curves */}
+            {/* East Path */}
             <motion.path
-              d="M 150,200 C 350,200 450,230 670,202"
+              d="M 120,180 C 280,180 380,195 500,190"
               fill="none"
-              stroke="#d4af37"
-              strokeWidth="0.8"
-              strokeOpacity="0.6"
-              initial={{ pathLength: 0 }}
-              whileInView={{ pathLength: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 3, ease: "easeInOut" }}
+              stroke="url(#pathGradient)"
+              strokeWidth="1"
+              initial={{ pathLength: 0, opacity: 0 }}
+              whileInView={{ pathLength: 1, opacity: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 2.5, ease: [0.25, 0.1, 0.25, 1] }}
             />
-
-            {/* Subcontinent Path (Right) */}
+            {/* Subcontinent Path */}
             <motion.path
-              d="M 1250,200 C 1050,200 950,230 730,202"
+              d="M 880,180 C 720,180 620,195 500,190"
               fill="none"
-              stroke="#d4af37"
-              strokeWidth="0.8"
-              strokeOpacity="0.6"
-              initial={{ pathLength: 0 }}
-              whileInView={{ pathLength: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 3, delay: 0.5, ease: "easeInOut" }}
+              stroke="url(#pathGradient)"
+              strokeWidth="1"
+              initial={{ pathLength: 0, opacity: 0 }}
+              whileInView={{ pathLength: 1, opacity: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 2.5, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
             />
-
-            {/* Middle East Path (Bottom) */}
+            {/* Middle Path */}
             <motion.path
-              d="M 700,550 C 700,450 720,300 700,220"
+              d="M 500,480 C 500,380 500,280 500,210"
               fill="none"
-              stroke="#d4af37"
-              strokeWidth="0.8"
-              strokeOpacity="0.6"
-              initial={{ pathLength: 0 }}
-              whileInView={{ pathLength: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 3, delay: 1, ease: "easeInOut" }}
+              stroke="url(#pathGradientV)"
+              strokeWidth="1"
+              initial={{ pathLength: 0, opacity: 0 }}
+              whileInView={{ pathLength: 1, opacity: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 2.5, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
             />
 
             {/* Center Unity Badge */}
-            <g transform="translate(700, 200)">
+            <g transform="translate(500, 190)">
+              {/* Outer glow ring */}
               <motion.circle
-                cx="0" cy="0" r="24"
+                cx="0" cy="0" r="32"
                 fill="none"
-                stroke="#d4af37"
-                strokeWidth="1.2"
-                filter="url(#glowGold)"
+                stroke="#C9A84C"
+                strokeWidth="0.5"
+                strokeOpacity="0.3"
+                filter="url(#glowSoft)"
                 initial={{ scale: 0, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 1.5, delay: 2.5 }}
+                transition={{ duration: 1.2, delay: 2, ease: [0.25, 0.1, 0.25, 1] }}
               />
+              {/* Main circle */}
+              <motion.circle
+                cx="0" cy="0" r="22"
+                fill="rgba(14,10,8,0.9)"
+                stroke="#C9A84C"
+                strokeWidth="1"
+                filter="url(#glowSoft)"
+                initial={{ scale: 0, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, delay: 2.2, ease: [0.25, 0.1, 0.25, 1] }}
+              />
+              {/* Inner letter A */}
               <motion.text
-                x="0" y="6"
-                fill="#d4af37"
-                fontSize="18"
+                x="0" y="5"
+                fill="#C9A84C"
+                fontSize="16"
                 fontFamily="serif"
                 textAnchor="middle"
-                className="select-none"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 1, delay: 3.5 }}
+                transition={{ duration: 0.8, delay: 2.8 }}
               >
                 A
               </motion.text>
+              {/* Oceana label above */}
               <motion.text
-                x="0" y="-45"
-                fill="#ffffff"
-                fillOpacity="0.4"
-                fontSize="12"
-                fontWeight="700"
-                letterSpacing="0.6em"
+                x="0" y="-38"
+                fill="#C9A84C"
+                fillOpacity="0.5"
+                fontSize="10"
+                fontWeight="600"
+                letterSpacing="0.4em"
                 textAnchor="middle"
                 className="uppercase select-none"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 1.5, delay: 4 }}
+                transition={{ duration: 1, delay: 3.2 }}
               >
                 Oceana
               </motion.text>
             </g>
 
-            {/* The East - Architectural Drawing */}
-            <g transform="translate(80, 200) scale(0.65)">
-              <g stroke="#d4af37" strokeWidth="1.2" strokeOpacity="0.8" fill="none">
-                <motion.path d="M-40,-30 Q0,-35 40,-30" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 2 }} />
-                <motion.rect x="-35" y="-25" width="70" height="4" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.5 }} />
-                <motion.line x1="-20" y1="-20" x2="-20" y2="30" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1 }} />
-                <motion.line x1="20" y1="-20" x2="20" y2="30" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1 }} />
-                <motion.line x1="-25" y1="0" x2="25" y2="0" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1 }} />
+            {/* The East - Torii Gate */}
+            <g transform="translate(100, 180)">
+              <g stroke="#C9A84C" strokeWidth="1" strokeOpacity="0.7" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                {/* Roof */}
+                <motion.path d="M-28,-18 Q0,-22 28,-18" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1.5, delay: 0.2 }} />
+                <motion.line x1="-24" y1="-14" x2="24" y2="-14" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.4 }} />
+                {/* Pillars */}
+                <motion.line x1="-16" y1="-10" x2="-16" y2="22" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.6 }} />
+                <motion.line x1="16" y1="-10" x2="16" y2="22" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.6 }} />
+                {/* Cross beam */}
+                <motion.line x1="-20" y1="2" x2="20" y2="2" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.8 }} />
+                {/* Base */}
+                <motion.line x1="-22" y1="22" x2="22" y2="22" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 1 }} />
               </g>
               <motion.text
-                x="0" y="65"
-                fill="#d4af37"
-                fillOpacity="0.6"
-                fontSize="24"
+                x="0" y="42"
+                fill="#C9A84C"
+                fillOpacity="0.5"
+                fontSize="11"
                 fontFamily="serif"
                 fontStyle="italic"
                 textAnchor="middle"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
+                initial={{ opacity: 0, y: 8 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 1.5, delay: 1 }}
+                transition={{ duration: 0.8, delay: 1.2 }}
               >
                 The East
               </motion.text>
-            </g>
-
-            {/* The Subcontinent - Architectural Drawing (Taj Mahal) */}
-            <g transform="translate(1320, 200) scale(0.65)">
-              <g stroke="#d4af37" strokeWidth="1.2" strokeOpacity="0.8" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                <motion.line x1="-50" y1="30" x2="50" y2="30" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1 }} />
-                <motion.path d="M-20,10 C-20,-15 -10,-25 0,-35 C10,-25 20,-15 20,10 Z" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 2 }} />
-                <motion.path d="M-35,15 C-35,5 -25,0 -20,10 Z" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1 }} />
-                <motion.path d="M35,15 C35,5 25,0 20,10 Z" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1 }} />
-                <motion.line x1="-45" y1="30" x2="-45" y2="0" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1 }} />
-                <motion.line x1="45" y1="30" x2="45" y2="0" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1 }} />
-                <motion.rect x="-25" y="10" width="50" height="20" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 1 }} />
-              </g>
               <motion.text
-                x="0" y="65"
-                fill="#d4af37"
-                fillOpacity="0.6"
-                fontSize="24"
+                x="0" y="56"
+                fill="#C9A84C"
+                fillOpacity="0.35"
+                fontSize="10"
                 fontFamily="serif"
-                fontStyle="italic"
                 textAnchor="middle"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 1.5, delay: 1.5 }}
+                transition={{ duration: 0.8, delay: 1.4 }}
               >
-                The Subcontinent
+                東
               </motion.text>
             </g>
 
-            {/* The Middle - Architectural Drawing (Mosque) */}
-            <g transform="translate(700, 580) scale(0.65)">
-              <g stroke="#d4af37" strokeWidth="1.2" strokeOpacity="0.8" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                <motion.line x1="-30" y1="30" x2="30" y2="30" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1 }} />
-                <motion.path d="M-20,15 C-30,5 -20,-15 0,-35 C20,-15 30,5 20,15 Z" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 2 }} />
-                <motion.line x1="-20" y1="15" x2="-20" y2="30" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1 }} />
-                <motion.line x1="20" y1="15" x2="20" y2="30" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1 }} />
+            {/* The Subcontinent - Taj Mahal Dome */}
+            <g transform="translate(900, 180)">
+              <g stroke="#C9A84C" strokeWidth="1" strokeOpacity="0.7" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                {/* Base platform */}
+                <motion.line x1="-32" y1="22" x2="32" y2="22" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.5 }} />
+                {/* Main dome */}
+                <motion.path d="M-16,8 C-16,-10 -8,-22 0,-28 C8,-22 16,-10 16,8 Z" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 2, delay: 0.7 }} />
+                {/* Side domes */}
+                <motion.path d="M-24,12 C-24,4 -20,0 -16,8 Z" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.9 }} />
+                <motion.path d="M24,12 C24,4 20,0 16,8 Z" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.9 }} />
+                {/* Minarets */}
+                <motion.line x1="-28" y1="22" x2="-28" y2="-4" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 1.1 }} />
+                <motion.line x1="28" y1="22" x2="28" y2="-4" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 1.1 }} />
+                {/* Spire */}
+                <motion.line x1="0" y1="-28" x2="0" y2="-34" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 1.3 }} />
+                <motion.circle cx="0" cy="-35" r="2" initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 1.5 }} />
               </g>
               <motion.text
-                x="0" y="65"
-                fill="#d4af37"
-                fillOpacity="0.6"
-                fontSize="24"
+                x="0" y="42"
+                fill="#C9A84C"
+                fillOpacity="0.5"
+                fontSize="11"
                 fontFamily="serif"
                 fontStyle="italic"
+                textAnchor="middle"
+                initial={{ opacity: 0, y: 8 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 1.6 }}
+              >
+                The Subcontinent
+              </motion.text>
+              <motion.text
+                x="0" y="56"
+                fill="#C9A84C"
+                fillOpacity="0.35"
+                fontSize="10"
+                fontFamily="serif"
                 textAnchor="middle"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 1.5, delay: 2 }}
+                transition={{ duration: 0.8, delay: 1.8 }}
+              >
+                उपमहाद्वीप
+              </motion.text>
+            </g>
+
+            {/* The Middle - Mosque Dome */}
+            <g transform="translate(500, 480)">
+              <g stroke="#C9A84C" strokeWidth="1" strokeOpacity="0.7" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                {/* Base */}
+                <motion.line x1="-24" y1="22" x2="24" y2="22" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.8 }} />
+                {/* Main dome */}
+                <motion.path d="M-18,10 C-22,0 -16,-12 0,-20 C16,-12 22,0 18,10 Z" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 2, delay: 1 }} />
+                {/* Crescent */}
+                <motion.path d="M-2,-24 C4,-24 6,-20 4,-18 C2,-20 0,-22 -2,-24 Z" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 1.3 }} />
+                {/* Minaret left */}
+                <motion.line x1="-20" y1="22" x2="-20" y2="-8" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 1.5 }} />
+                <motion.path d="M-22,-8 L-18,-8 L-20,-12 Z" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 1.7 }} />
+                {/* Minaret right */}
+                <motion.line x1="20" y1="22" x2="20" y2="-8" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 1.5 }} />
+                <motion.path d="M18,-8 L22,-8 L20,-12 Z" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 1.7 }} />
+              </g>
+              <motion.text
+                x="0" y="42"
+                fill="#C9A84C"
+                fillOpacity="0.5"
+                fontSize="11"
+                fontFamily="serif"
+                fontStyle="italic"
+                textAnchor="middle"
+                initial={{ opacity: 0, y: 8 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 2 }}
               >
                 The Middle
+              </motion.text>
+              <motion.text
+                x="0" y="56"
+                fill="#C9A84C"
+                fillOpacity="0.35"
+                fontSize="10"
+                fontFamily="serif"
+                textAnchor="middle"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 2.2 }}
+              >
+                الشرق الأوسط
               </motion.text>
             </g>
           </svg>
         </div>
 
-        {/* Existing Quote Content over the background */}
-        <div className="relative z-10 max-w-5xl mx-auto text-center pointer-events-none drop-shadow-[0_4px_10px_rgba(0,0,0,0.9)] mt-32 mix-blend-normal">
-          <StaggeredQuote text="We don't just serve meals; we guard a legacy. A sanctuary on the Dammam Corniche where the salt of the Gulf meets the spices of three ancient worlds." />
+        {/* Quote Content */}
+        <div className="relative z-10 max-w-4xl mx-auto text-center px-4">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+            className="font-serif text-[clamp(24px,5vw,42px)] md:text-[clamp(32px,6vw,52px)] text-[#F7F2E8] leading-[1.5] md:leading-[1.45] font-light tracking-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)]"
+          >
+            {isArabic ? "مو بس نطبخ، احنا نحمي إرث." : "We don't just serve meals; we guard a legacy."}
+          </motion.p>
           
-          {/* Expanding Gold Underline with Pulsate */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+            className="font-serif text-[clamp(22px,4.5vw,38px)] md:text-[clamp(28px,5.5vw,46px)] text-[#D4C4A0] leading-[1.6] md:leading-[1.55] font-light mt-6 md:mt-8 drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)]"
+          >
+            {isArabic ? 'ملاذ على كورنيش الدمام، فيه ملح الخليج يمتزج مع بهارات ثلاث عوالم قديمة.' : 'A sanctuary on the Dammam Corniche where the salt of the Gulf meets the spices of three ancient worlds.'}
+          </motion.p>
+          
+          {/* Elegant Divider */}
           <motion.div 
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
+            initial={{ scaleX: 0, opacity: 0 }}
+            whileInView={{ scaleX: 1, opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 1.2, delay: 0.4, ease: "easeOut" }}
-            className="relative h-[2px] w-32 bg-gold/50 mx-auto mt-16 origin-center"
+            transition={{ duration: 1.2, delay: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
+            className="relative h-px w-24 md:w-32 bg-gradient-to-r from-transparent via-[#C9A84C]/50 to-transparent mx-auto mt-12 md:mt-16"
           >
             <motion.div 
               animate={{ 
-                opacity: [0.4, 1, 0.4],
-                boxShadow: [
-                  "0 0 4px rgba(212,175,55,0.4)",
-                  "0 0 20px rgba(212,175,55,1)",
-                  "0 0 4px rgba(212,175,55,0.4)"
-                ]
+                opacity: [0.3, 0.8, 0.3],
               }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute inset-0 bg-gold rounded-full"
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-[#C9A84C] to-transparent"
             />
           </motion.div>
         </div>
@@ -376,7 +479,7 @@ export default function Home() {
               viewport={{ once: true }}
               className="flex items-center gap-4 mb-4"
             >
-              <span className="text-gold text-[10px] font-bold tracking-[0.4em] uppercase">The Artisans</span>
+              <span className="text-gold text-[10px] font-bold tracking-[0.4em] uppercase">{isArabic ? 'الحرفيين' : 'The Artisans'}</span>
               <span className="h-px w-12 bg-gold/50"></span>
             </motion.div>
             <motion.h2 
@@ -386,7 +489,7 @@ export default function Home() {
               transition={{ delay: 0.1 }}
               className="font-serif text-5xl md:text-7xl text-ivory mb-2 drop-shadow-md"
             >
-              Masters of the <span className="italic text-gold">Craft</span>
+              {isArabic ? 'أساتذة ' : 'Masters of the '}<span className="italic text-gold">{isArabic ? 'الحرفة' : 'Craft'}</span>
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -395,7 +498,7 @@ export default function Home() {
               transition={{ delay: 0.2 }}
               className="text-gray-400 font-serif italic text-xl max-w-md"
             >
-              Architects of flavor, guardians of a thirty-year legacy.
+              {isArabic ? 'مهندسي النكهة، حراس إرث ثلاثين سنة.' : 'Architects of flavor, guardians of a thirty-year legacy.'}
             </motion.p>
           </div>
           <motion.div
@@ -404,7 +507,7 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <Link to="/story" className="group flex items-center gap-3 text-gold text-xs font-bold tracking-[0.2em] uppercase hover:text-white transition-colors duration-300 cursor-pointer p-2 rounded-md">
-              <span className="border-b border-gold/30 pb-1 group-hover:border-white transition-colors">Read their story</span> 
+              <span className="border-b border-gold/30 pb-1 group-hover:border-white transition-colors">{isArabic ? 'اقرأ قصتهم' : 'Read their story'}</span> 
               <ArrowRight size={16} className="transform transition-transform duration-300 group-hover:translate-x-2" />
             </Link>
           </motion.div>
@@ -413,6 +516,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 relative z-10">
           <MasterCard 
             role="Executive Chef"
+            roleArabic="شيف تنفيذي"
             name="Chef 1"
             nameArabic="الشيف ١"
             img="/Chef 1.jpeg"
@@ -420,6 +524,7 @@ export default function Home() {
           />
           <MasterCard 
             role="Sommelier & Manager"
+            roleArabic="السقا والمدير"
             name="Chef 2"
             nameArabic="الشيف ٢"
             img="/Chef 2.jpeg"
@@ -446,7 +551,7 @@ export default function Home() {
               viewport={{ once: true }}
               className="text-gold text-[10px] sm:text-xs font-bold tracking-[0.4em] uppercase mb-12"
             >
-              The Setting · Dammam Corniche, Saudi Arabia
+              {isArabic ? 'المكان · كورنيش الدمام، السعودية' : 'The Setting · Dammam Corniche, Saudi Arabia'}
             </motion.p>
 
             <div className="flex">
@@ -467,8 +572,8 @@ export default function Home() {
                   transition={{ duration: 0.8 }}
                   className="font-serif text-5xl sm:text-6xl text-white font-light leading-[1.15] mb-10"
                 >
-                  Outside, the <span className="text-gold">Gulf breathes</span>.<br />
-                  <span className="italic text-gray-300">Inside, three worlds dine.</span>
+                  {isArabic ? 'برّا، ' : 'Outside, the '}<span className="text-gold">{isArabic ? 'الخليج يتنفس' : 'Gulf breathes'}</span>.<br />
+                  <span className="italic text-gray-300">{isArabic ? 'جوا، ثلاث عوالم تتغدى.' : 'Inside, three worlds dine.'}</span>
                 </motion.h2>
 
                 <div className="flex flex-col gap-8 max-w-xl text-gray-300 font-serif leading-relaxed text-lg sm:text-xl">
@@ -478,7 +583,7 @@ export default function Home() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.7, delay: 0.2 }}
                   >
-                    Tonight, somewhere on the Corniche, someone will get engaged. A father will close the deal that changes his family's future. A mother will mark a birthday that deserves far more than a dinner.
+                    {isArabic ? 'الليلة، في مكان على الكورنيش، في أحد بيخطب. أب بيسوي صفقة تغير مستقبل عيلته. أم تحتفل بعيد ميلاد يستاهل أكثر من عشاء.' : "Tonight, somewhere on the Corniche, someone will get engaged. A father will close the deal that changes his family's future. A mother will mark a birthday that deserves far more than a dinner."}
                   </motion.p>
                   <motion.p
                     initial={{ opacity: 0, y: 15 }}
@@ -486,7 +591,7 @@ export default function Home() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.7, delay: 0.35 }}
                   >
-                    They will all come here. They have always come here. Because the Dammam Corniche has never been just a road by the sea — it is where the city's most important stories happen.
+                    {isArabic ? 'كلهم بيجون هني. دايمًا يجون هني. لأن كورنيش الدمام أبدًا مو مجرد شارع عالبحر — هني المكان اللي تسير فيه أهم سوالف المدينة.' : "They will all come here. They have always come here. Because the Dammam Corniche has never been just a road by the sea — it is where the city's most important stories happen."}
                   </motion.p>
                   <motion.p
                     initial={{ opacity: 0, y: 15 }}
@@ -495,7 +600,7 @@ export default function Home() {
                     transition={{ duration: 0.7, delay: 0.5 }}
                     className="text-white font-medium italic mt-2"
                   >
-                    For thirty years, Oceana has been their table.
+                    {isArabic ? 'من ثلاثين سنة، أوشيانا هي طاولتهم.' : 'For thirty years, Oceana has been their table.'}
                   </motion.p>
                 </div>
 
@@ -508,9 +613,9 @@ export default function Home() {
                   className="mt-16 grid grid-cols-1 sm:grid-cols-3 max-w-2xl bg-white/[0.02] backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden shadow-2xl"
                 >
                   {[
-                    { n: '30', label: 'Years on the', sub: 'Corniche' },
-                    { n: '3', label: 'Cultures,', sub: 'One Table' },
-                    { n: '∞', label: 'Stories', sub: 'Told Here' },
+                    { n: '30', label: isArabic ? 'سنة على' : 'Years on the', sub: isArabic ? 'الكورنيش' : 'Corniche' },
+                    { n: '3', label: isArabic ? 'عوالم،' : 'Cultures,', sub: isArabic ? 'طاولة وحدة' : 'One Table' },
+                    { n: '∞', label: isArabic ? 'سوالف' : 'Stories', sub: isArabic ? 'صارت هني' : 'Told Here' },
                   ].map((stat, i) => (
                     <div key={i} className="group relative flex flex-col items-center justify-center p-8 sm:p-10 border-b sm:border-b-0 sm:border-r border-white/10 last:border-0 hover:bg-white/[0.04] transition-colors duration-500">
                       <span className="font-serif text-4xl md:text-5xl text-gold font-light mb-4 leading-none group-hover:scale-110 transition-transform duration-500 drop-shadow-[0_0_15px_rgba(201,168,76,0.5)]">{stat.n}</span>
@@ -544,11 +649,11 @@ export default function Home() {
                 <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
               </svg>
               <p className="font-serif italic text-lg sm:text-xl text-white leading-relaxed mb-6 px-2">
-                "We don't run a restaurant. We curate the backdrop for the most important evenings of people's lives."
+                {isArabic ? "مو بس نشغل مطعم، احنا نصنع الخلفية لأهم سهرات الناس." : "We don't run a restaurant. We curate the backdrop for the most important evenings of people's lives."}
               </p>
               <div className="border-t border-gold/30 w-20 pt-5 flex flex-col gap-2 mx-auto">
                 <span className="text-gold text-[10px] font-bold tracking-[0.3em] uppercase">Oceana</span>
-                <span className="text-gray-400 text-[10px] tracking-widest uppercase">Est. 1994</span>
+                <span className="text-gray-400 text-[10px] tracking-widest uppercase">{isArabic ? 'من ١٩٩٤' : 'Est. 1994'}</span>
               </div>
             </div>
           </motion.div>
@@ -574,7 +679,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-gold text-[10px] font-bold tracking-[0.4em] uppercase mb-8"
           >
-            The Dammam Corniche · Est. 1994
+            {isArabic ? 'كورنيش الدمام · من ١٩٩٤' : 'The Dammam Corniche · Est. 1994'}
           </motion.p>
 
           <motion.h2 
@@ -583,8 +688,8 @@ export default function Home() {
             viewport={{ once: true }}
             className="font-serif text-5xl md:text-7xl text-white mb-6 drop-shadow-2xl leading-tight"
           >
-            You could eat anywhere<br />
-            <span className="italic text-gold">tonight.</span>
+            {isArabic ? 'تقدر تاكل في أي مكان' : 'You could eat anywhere'}<br />
+            <span className="italic text-gold">{isArabic ? 'الليلة.' : 'tonight.'}</span>
           </motion.h2>
 
           <motion.div
@@ -595,10 +700,10 @@ export default function Home() {
             className="max-w-2xl mb-14"
           >
             <p className="text-gray-200 text-lg md:text-xl font-serif leading-relaxed drop-shadow-lg">
-              Or you could sit at the edge of the Arabian Gulf, where the air carries thirty years of extraordinary evenings — and let three civilizations compete to impress you.
+              {isArabic ? 'أو تقعد على حافة الخليج العربي، فيه الهوا يحمل ريحة ثلاثين سنة من السهرات، وتخلّي ثلاث حضارات تتنافس عشان تعجبك.' : 'Or you could sit at the edge of the Arabian Gulf, where the air carries thirty years of extraordinary evenings — and let three civilizations compete to impress you.'}
             </p>
             <p className="text-white font-serif font-bold text-xl md:text-2xl italic mt-6">
-              That second option is Oceana.
+              {isArabic ? 'الخيار الثاني اسمه أوشيانا.' : 'That second option is Oceana.'}
             </p>
           </motion.div>
 
@@ -607,20 +712,30 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-6 items-center"
+            className="w-full max-w-md mx-auto flex flex-col gap-4"
           >
             <Link 
               to="/reservations" 
-              className="group relative overflow-hidden bg-gradient-to-br from-burgundy to-burgundy/80 text-white px-14 py-5 rounded-full text-sm font-bold tracking-[0.2em] uppercase transition-all duration-500 shadow-[0_10px_30px_rgba(114,14,35,0.5)] hover:shadow-[0_20px_50px_rgba(114,14,35,0.7)] cursor-pointer hover:-translate-y-1 active:scale-95"
+              className="cta-btn-primary group relative overflow-hidden w-full text-center"
             >
-              <span className="relative z-10">Reserve Your Evening</span>
-              <div className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out skew-x-12"></div>
+              <span className="relative z-10 flex items-center justify-center gap-3">
+                <span>{isArabic ? 'احجز سهرتك' : 'Reserve Your Evening'}</span>
+                <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </span>
+              <div className="cta-btn-shine"></div>
             </Link>
             <Link 
               to="/menu" 
-              className="group flex items-center justify-center bg-white/5 backdrop-blur-md border border-white/20 hover:border-gold/50 text-white px-14 py-5 rounded-full text-sm font-bold tracking-[0.2em] uppercase transition-all duration-500 cursor-pointer hover:bg-white/10 hover:-translate-y-1 active:scale-95 shadow-xl"
+              className="cta-btn-secondary group w-full text-center"
             >
-              <span className="group-hover:text-gold transition-colors duration-300">See What Awaits You</span>
+              <span className="flex items-center justify-center gap-3">
+                <span>{isArabic ? 'شوف اللي ينتظرك' : 'See What Awaits You'}</span>
+                <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </span>
             </Link>
           </motion.div>
 
@@ -631,7 +746,7 @@ export default function Home() {
             transition={{ delay: 0.8 }}
             className="text-gray-600 text-xs tracking-wider mt-10 font-serif italic"
           >
-            King Abdullah Road · Dammam Corniche · Dammam 32414 · Saudi Arabia
+            {isArabic ? 'طريق الملك عبد الله · كورنيش الدمام · الدمام 32414 · السعودية' : 'King Abdullah Road · Dammam Corniche · Dammam 32414 · Saudi Arabia'}
           </motion.p>
         </div>
       </section>
@@ -640,6 +755,7 @@ export default function Home() {
 }
 
 function TraditionsInteractive() {
+  const { isArabic } = useLanguage();
   const scrollRef = useRef<HTMLDivElement>(null);
   
   const traditions = [
@@ -648,7 +764,8 @@ function TraditionsInteractive() {
       title: "The East",
       titleArabic: "الشرق",
       desc: "Precision, discipline, and the ancient alchemy of spice. From Kyoto to Bangkok, we source the unsourceable.",
-      img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+      descArabic: "دقة وانضباط وسيمياء البهارات القديمة. من كيوتو لبانكوك، نجيب اللي ما ينحصل.",
+      img: "/The East.jpeg",
       linkTo: "/menu"
     },
     {
@@ -656,7 +773,8 @@ function TraditionsInteractive() {
       title: "The Subcontinent",
       titleArabic: "شبه القارة",
       desc: "Technique honed in the fires of India, cooled by the breeze of the Dammam Corniche. A dedication to the product, elevated by mastery.",
-      img: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+      descArabic: "أسلوب صقله نار الهند، وبرّده هوى الكورنيش. إخلاص للشي، ترقيه البراعة.",
+      img: "/The Subcontinent.jpeg",
       linkTo: "/menu"
     },
     {
@@ -664,7 +782,8 @@ function TraditionsInteractive() {
       title: "The Middle",
       titleArabic: "الشرق الأوسط",
       desc: "Rooted in the very soil of the Corniche. Saudi hospitality is the canvas upon which we paint—a thirty-year love letter to our home by the sea.",
-      img: "https://images.unsplash.com/photo-1596450514735-111a2fe02935?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+      descArabic: "من تراب الكورنيش. الكرم السعودي هو اللوحة اللي نرسم عليها — رسالة حب لبيتنا عالبحر.",
+      img: "/The Middle.jpeg",
       linkTo: "/menu"
     }
   ];
@@ -704,7 +823,7 @@ function TraditionsInteractive() {
                  className="flex flex-col h-full justify-between"
                >
                   <div className="flex items-center gap-3">
-                    <span className="text-gold text-[10px] font-display font-bold tracking-[0.4em] uppercase">Tradition</span>
+                    <span className="text-gold text-[10px] font-display font-bold tracking-[0.4em] uppercase">{isArabic ? 'تقليد' : 'Tradition'}</span>
                     <span className="h-px w-8 bg-gold/50"></span>
                     <span className="text-gold text-[10px] font-display font-bold tracking-[0.4em] uppercase">{t.num}</span>
                   </div>
@@ -712,14 +831,14 @@ function TraditionsInteractive() {
                   <div className="mt-auto">
                     <div className="flex flex-col mb-4">
                       <h3 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white tracking-tight drop-shadow-lg mb-1">
-                        {t.title}
+                        {isArabic ? t.titleArabic : t.title}
                       </h3>
                       <span className="font-arabic text-gold/80 text-2xl drop-shadow-md">{t.titleArabic}</span>
                     </div>
                     
                     <div className="overflow-hidden mb-6">
                       <p className="text-ivory/80 font-serif italic text-base md:text-lg leading-relaxed transform transition-transform duration-500 opacity-80 md:opacity-0 md:translate-y-4 group-hover:opacity-100 group-hover:translate-y-0">
-                        {t.desc}
+                        {isArabic ? t.descArabic : t.desc}
                       </p>
                     </div>
                     
@@ -727,7 +846,7 @@ function TraditionsInteractive() {
                       to={t.linkTo} 
                       className="btn-press inline-flex items-center gap-3 text-gold text-xs font-display font-bold tracking-[0.2em] uppercase border border-gold/40 px-6 py-3 rounded-full hover:bg-gold hover:text-rich-black transition-all duration-300 md:opacity-0 md:translate-y-4 group-hover:opacity-100 group-hover:translate-y-0"
                     >
-                      <span>Explore</span>
+                      <span>{isArabic ? 'اكتشف' : 'Explore'}</span>
                       <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </div>
@@ -751,35 +870,8 @@ function TraditionsInteractive() {
   );
 }
 
-// Reusable animated staggered quote component using IntersectionObserver logic
-function StaggeredQuote({ text }: { text: string }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-  
-  const words = text.split(" ");
-  
-  return (
-    <h2 
-      ref={ref}
-      className="font-serif text-3xl md:text-4xl lg:text-5xl leading-relaxed text-ivory px-4 md:px-8"
-      style={{ textShadow: "0 2px 20px rgba(0,0,0,0.9)" }}
-    >
-      {words.map((word, i) => (
-        <motion.span
-          key={i}
-          initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
-          animate={isInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
-          transition={{ duration: 1.2, ease: "easeOut", delay: i * 0.05 }}
-          className="inline-block mr-[0.25em]"
-        >
-          {word}
-        </motion.span>
-      ))}
-    </h2>
-  );
-}
-
-function MasterCard({ role, name, nameArabic, img, delay, className = "" }: any) {
+function MasterCard({ role, roleArabic, name, nameArabic, img, delay, className = "" }: any) {
+  const { isArabic } = useLanguage();
   return (
     <motion.div 
       initial={{ opacity: 0, y: 40 }}
@@ -800,7 +892,7 @@ function MasterCard({ role, name, nameArabic, img, delay, className = "" }: any)
       <div className="absolute bottom-0 left-0 w-full p-8 md:p-10 translate-y-4 group-hover:translate-y-0 transition-transform duration-700">
         <div className="flex items-center gap-3 mb-3">
           <span className="w-6 h-px bg-gold/50 transition-all duration-500 group-hover:w-10"></span>
-          <p className="text-gold text-[10px] font-bold tracking-[0.3em] uppercase">{role}</p>
+          <p className="text-gold text-[10px] font-bold tracking-[0.3em] uppercase">{isArabic ? roleArabic : role}</p>
         </div>
         <div className="flex justify-between items-end">
           <h3 className="font-serif italic text-4xl md:text-5xl text-ivory drop-shadow-lg">{name}</h3>
@@ -813,5 +905,3 @@ function MasterCard({ role, name, nameArabic, img, delay, className = "" }: any)
     </motion.div>
   );
 }
-
-

@@ -1,12 +1,13 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Utensils } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isArabic, setIsArabic] = useState(false);
   const location = useLocation();
+  const { isArabic, toggleLanguage } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,12 +16,6 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const toggleLanguage = () => {
-    setIsArabic(!isArabic);
-    document.documentElement.dir = !isArabic ? 'rtl' : 'ltr';
-    document.documentElement.lang = !isArabic ? 'ar' : 'en';
-  };
 
   const links = [
     { en: 'Menu', ar: 'القائمة', path: '/menu' },
@@ -74,9 +69,11 @@ export default function Navbar() {
             ))}
             <Link
               to="/reservations"
-              className="bg-burgundy hover:bg-burgundy/90 text-white px-6 py-2.5 rounded-full font-display text-sm font-bold tracking-widest transition-colors uppercase btn-press shadow-lg shadow-burgundy/20"
+              className="group relative overflow-hidden bg-gradient-to-br from-[#8B1A2B] via-[#A8203A] to-[#6B0F1A] text-white px-7 py-2.5 rounded-full font-display text-[11px] font-bold tracking-[0.22em] uppercase transition-all duration-500 hover:shadow-[0_8px_32px_rgba(139,26,43,0.5),0_0_20px_rgba(201,168,76,0.15)] hover:-translate-y-0.5 active:scale-95 before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent before:translate-x-[-100%] before:transition-transform before:duration-700 hover:before:translate-x-[100%]"
             >
-              {isArabic ? <span className="font-arabic text-base tracking-normal">حجز طاولة</span> : 'Reserve Table'}
+              <span className="relative z-10">
+                {isArabic ? <span className="font-arabic text-[13px] tracking-normal">حجز طاولة</span> : 'Reserve Table'}
+              </span>
             </Link>
           </nav>
 
@@ -120,9 +117,11 @@ export default function Navbar() {
             <Link
               to="/reservations"
               onClick={() => setIsOpen(false)}
-              className="bg-burgundy text-white px-6 py-4 rounded-sm text-center font-display font-bold tracking-widest mt-4 uppercase btn-press"
+              className="group relative overflow-hidden bg-gradient-to-br from-[#8B1A2B] via-[#A8203A] to-[#6B0F1A] text-white px-6 py-4 rounded-full text-center font-display text-[11px] font-bold tracking-[0.22em] uppercase transition-all duration-500 hover:shadow-[0_8px_32px_rgba(139,26,43,0.5),0_0_20px_rgba(201,168,76,0.15)] hover:-translate-y-0.5 active:scale-95 before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent before:translate-x-[-100%] before:transition-transform before:duration-700 hover:before:translate-x-[100%]"
             >
-              {isArabic ? <span className="font-arabic text-lg tracking-normal">حجز طاولة</span> : 'Reserve Table'}
+              <span className="relative z-10">
+                {isArabic ? <span className="font-arabic text-[13px] tracking-normal">حجز طاولة</span> : 'Reserve Table'}
+              </span>
             </Link>
           </div>
         </div>

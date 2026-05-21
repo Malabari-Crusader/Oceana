@@ -6,7 +6,7 @@ export const menuData = [
     title: 'Shuruaat — The Awakening',
     subtitle: 'Indian Starters in True Tradition',
     icon: Sparkles,
-    image: 'https://images.unsplash.com/photo-1732519970445-8f2d6998961f?q=80&w=1000&auto=format&fit=crop',
+    image: '/Shuruaat The Awakening.jpeg',
     items: [
       { name: 'Shabnam Chaat', price: 'SAR 42', desc: 'Mushroom & potato salad in a spicy combination. Shabnam means "morning dew" in Hindi. This dish captures that fresh, dewy moment—the crisp bite of fresh vegetables glistening with spiced oils.' },
       { name: 'Chicken Chaat', price: 'SAR 52', desc: 'Boneless cold chicken pieces spiced up in a tasty salad. Chicken is sous-vide for absolute tenderness, then seared for crust. The salad is a precise balance: tamarind\'s sourness, pomegranate\'s burst, the cooling whisper of mint.' },
@@ -37,7 +37,7 @@ export const menuData = [
     title: 'Tandoori Creations — The Fire',
     subtitle: 'Mastery of the Clay Oven',
     icon: Flame,
-    image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=1000&auto=format&fit=crop',
+    image: '/Tandoori Creations.jpeg',
     items: [
       { name: 'Oceana Special Prawns', price: 'SAR 172', desc: 'Jumbo Gulf prawns (with/without shell) seared in the tandoor. Marinated in yogurt infused with ginger, garlic, and fenugreek. The shell sears to a crisp while meat inside stays buttery.' },
       { name: 'Prawn Sizzler', price: 'SAR 172', desc: 'Prawns sizzler served fresh on a hot plate. Fresh Gulf prawns are marinated in a spiced yogurt, then cooked on a bed of peppers and onions on an iron plate that stays at 120°C.' },
@@ -214,7 +214,7 @@ export const menuData = [
     title: 'Rice & Bread Canvas',
     subtitle: 'The Foundation of the Feast',
     icon: Wheat,
-    image: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=1000&auto=format&fit=crop',
+    image: '/Rice Bread canvas.jpeg',
     items: [
       { name: 'Kashmiri Pulao', price: 'SAR 84', desc: 'Steamed rice in a mouth-watering mix. Basmati rice is toasted in ghee with whole spices, then steamed. Dried fruits and nuts are toasted separately, then folded in.' },
       { name: 'Mutter Pulao', price: 'SAR 77', desc: 'Pulao rice cooked in green peas & butter. Rice and peas are cooked together so they absorb each other\'s flavors. Rice that\'s subtly sweet, fragrant, and dotted with green.' },
@@ -262,7 +262,7 @@ export const menuData = [
     title: 'Vegetarian Treasures',
     subtitle: 'The Garden\'s Gift',
     icon: Leaf,
-    image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000&auto=format&fit=crop',
+    image: '/Vegetarian Treasures.jpeg',
     items: [
       { name: 'Paneer Tikka', price: 'SAR 126', desc: 'Spiced pieces of cottage cheese, delicately barbecued. Cut into cubes, marinated in yogurt and spices, then grilled in the tandoor. The exterior chars, the interior stays soft.' },
       { name: 'Haryali Kabab', price: 'SAR 126', desc: 'Finely ground vegetable kebab, barbecued on skewers. Green herbs—cilantro, mint, parsley—are ground together with paneer and vegetables. Molded around a skewer and grilled.' },
@@ -311,7 +311,7 @@ export const menuData = [
     title: 'Sweet Finale — The Memory',
     subtitle: 'Decadent Endings',
     icon: Coffee,
-    image: 'https://images.unsplash.com/photo-1515037893149-de7f840978e2?q=80&w=1000&auto=format&fit=crop',
+    image: '/Sweet Finale.jpeg',
     items: [
       { name: 'Gulab Jamun', price: 'SAR 35', desc: 'Milk solids rolled in nuts, fried and served in syrup. Soaked in sugar syrup infused with rose water and cardamom. Each bite releases warmth and sweetness.' },
       { name: 'Ras Malai', price: 'SAR 42', desc: 'Cheese discs served in malai (cream). Fresh paneer is flattened into discs, boiled until soft, then chilled, then placed in sweetened, cardamom-infused cream.' },

@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Twitter, MapPin, Phone, Clock } from 'lucide-react';
 import { DhowSceneBackground } from './DhowSceneBackground';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Footer() {
+  const { isArabic } = useLanguage();
   return (
     <footer className="relative overflow-hidden pt-20 pb-12 mt-auto bg-rich-black">
       {/* Repeating motif border */}
@@ -36,7 +38,7 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-ivory/60 text-[13px] leading-[1.6] font-sans font-normal tracking-wide">
-              A culinary landmark on the Dammam Corniche since 1994. Where three global cultures converge by the Arabian Gulf.
+              {isArabic ? 'معلم طبخي على كورنيش الدمام من ١٩٩٤. وين تلتقي ثلاث ثقافات عالمية على الخليج العربي.' : 'A culinary landmark on the Dammam Corniche since 1994. Where three global cultures converge by the Arabian Gulf.'}
             </p>
             <div className="flex gap-5 text-ivory/60 mt-2">
               <a href="#" className="hover:text-gold hover:scale-125 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm p-1" aria-label="Instagram"><Instagram size={24} strokeWidth={1.5} /></a>
@@ -47,7 +49,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div className="flex flex-col gap-4">
-            <h4 className="font-display text-gold font-bold tracking-[0.25em] uppercase text-xs mb-3">Contact</h4>
+            <h4 className="font-display text-gold font-bold tracking-[0.25em] uppercase text-xs mb-3">{isArabic ? 'اتصل بنا' : 'Contact'}</h4>
             <div className="flex items-start gap-3 text-ivory/70 font-sans text-[15px]">
               <Phone size={18} className="shrink-0 mt-1 text-crimson opacity-80" />
               <p className="leading-relaxed tracking-wide">057 096 2002<br />reservations@oceana.sa</p>
@@ -56,7 +58,7 @@ export default function Footer() {
 
           {/* Location */}
           <div className="flex flex-col gap-4">
-            <h4 className="font-display text-gold font-bold tracking-[0.25em] uppercase text-xs mb-3">Location</h4>
+            <h4 className="font-display text-gold font-bold tracking-[0.25em] uppercase text-xs mb-3">{isArabic ? 'الموقع' : 'Location'}</h4>
             <div className="flex items-start gap-3 text-ivory/70 font-sans text-[15px]">
               <MapPin size={18} className="shrink-0 mt-1 text-crimson opacity-80" />
               <div className="leading-relaxed tracking-wide">
@@ -68,11 +70,11 @@ export default function Footer() {
 
           {/* Hours */}
           <div className="flex flex-col gap-4">
-            <h4 className="font-display text-gold font-bold tracking-[0.25em] uppercase text-xs mb-3">Hours</h4>
+            <h4 className="font-display text-gold font-bold tracking-[0.25em] uppercase text-xs mb-3">{isArabic ? 'ساعات العمل' : 'Hours'}</h4>
             <div className="flex items-start gap-3 text-ivory/70 text-[15px]">
               <Clock size={18} className="shrink-0 mt-1 text-crimson opacity-80" />
               <div className="flex flex-col gap-1 leading-relaxed">
-                <p><span className="font-sans font-bold text-ivory tracking-wide">Everyday:</span> <span className="font-serif italic text-lg">8am - 2am</span></p>
+                <p><span className="font-sans font-bold text-ivory tracking-wide">{isArabic ? 'يومياً:' : 'Everyday:'}</span> <span className="font-serif italic text-lg">{isArabic ? '٨ صباحاً - ٢ فجراً' : '8am - 2am'}</span></p>
               </div>
             </div>
           </div>
@@ -80,12 +82,12 @@ export default function Footer() {
         
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-sm font-serif text-ivory/50 flex flex-col items-center md:items-start gap-1">
-            <span>© {new Date().getFullYear()} Oceana Restaurant. All rights reserved.</span>
+            <span>{isArabic ? `© ${new Date().getFullYear()} مطعم أوشيانا. جميع الحقوق محفوظة.` : `© ${new Date().getFullYear()} Oceana Restaurant. All rights reserved.`}</span>
             <span className="font-arabic text-gold text-lg">مطعم أوشيانا</span>
           </div>
           <div className="flex gap-6 font-display tracking-widest uppercase text-xs font-bold text-ivory/50">
-            <Link to="#" className="hover:text-gold transition-colors duration-300 link-underline pb-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm">Privacy Policy</Link>
-            <Link to="#" className="hover:text-gold transition-colors duration-300 link-underline pb-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm">Terms of Service</Link>
+            <Link to="#" className="hover:text-gold transition-colors duration-300 link-underline pb-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm">{isArabic ? 'سياسة الخصوصية' : 'Privacy Policy'}</Link>
+            <Link to="#" className="hover:text-gold transition-colors duration-300 link-underline pb-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm">{isArabic ? 'شروط الخدمة' : 'Terms of Service'}</Link>
           </div>
         </div>
       </div>

@@ -2,8 +2,52 @@ import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { menuData } from '../data/menuData';
 import { Helmet } from 'react-helmet-async';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Menu() {
+  const { isArabic } = useLanguage();
+
+  const categoryTitleAr: Record<string, string> = {
+    'Shuruaat — The Awakening': 'الشروع — الاستيقاظ',
+    'Tandoori Creations — The Fire': 'إبداعات التندور — النار',
+    'Curry Creations — The Alchemy': 'إبداعات الكاري — الخيمياء',
+    "Seafood Treasury — The Gulf's Gift": 'كنز المأكولات البحرية — هدية الخليج',
+    'Meat Mastery — The Heritage Craft': 'إتقان اللحوم — الحرفة التراثية',
+    'Rice & Bread Canvas': 'لوحة الأرز والخبز',
+    'Vegetarian Treasures': 'كنوز النباتيين',
+    'Sweet Finale — The Memory': 'الختام الحلو — الذاكرة'
+  };
+
+  const categorySubtitleAr: Record<string, string> = {
+    'Indian Starters in True Tradition': 'مقبلات هندية بتقليد أصيل',
+    'Mastery of the Clay Oven': 'إتقان الفرن الطيني',
+    'Slow-cooked Spiced Gravies': 'مرق متبل مطبوخ ببطء',
+    'Fresh Catch from the Arabian Gulf': 'صيد طازج من الخليج العربي',
+    'The Finest Cuts, Perfectly Spiced': 'أفضل القطع، متبلة بشكل مثالي',
+    'The Foundation of the Feast': 'أساس الوليمة',
+    "The Garden's Gift": 'هدية الحديقة',
+    'Decadent Endings': 'نهايات فاخرة'
+  };
+
+  const additionalGroupAr: Record<string, string> = {
+    'Additional Starters & Soups': 'مقبلات وشوربات إضافية',
+    'Additional Tandoori': 'تندوري إضافي',
+    'Chicken Curries': 'كاري الدجاج',
+    'Vegetable Curries': 'كاري الخضار',
+    'Seafood Curries': 'كاري المأكولات البحرية',
+    'Fish Tandoori': 'تندوري السمك',
+    'Fish Curry': 'كاري السمك',
+    'Mutton': 'لحم ضأن',
+    'Chicken': 'دجاج',
+    'Beef/Tender Loin': 'لحم بقري / لحم المتن',
+    'Rice Dishes': 'أطباق الأرز',
+    'Breads': 'خبز',
+    'Tandoori': 'تندوري',
+    'Curry': 'كاري',
+    'Dal (Lentils)': 'دال (عدس)',
+    'Desserts': 'حلويات'
+  };
+
   const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
 
   const menuSchema = {
@@ -95,14 +139,16 @@ export default function Menu() {
           
           {/* Headline */}
           <div className="text-left flex flex-col">
-            <span className="font-serif italic font-light text-[52px] md:text-[72px] text-white tracking-[-0.01em] leading-[1.05]">Three Worlds.</span>
-            <span className="font-serif font-semibold text-[52px] md:text-[72px] text-[#C9A84C] tracking-[0.02em] leading-[1.05]">One Table.</span>
+            <span className="font-serif italic font-light text-[52px] md:text-[72px] text-white tracking-[-0.01em] leading-[1.05]">{isArabic ? 'ثلاثة عوالم.' : 'Three Worlds.'}</span>
+            <span className="font-serif font-semibold text-[52px] md:text-[72px] text-[#C9A84C] tracking-[0.02em] leading-[1.05]">{isArabic ? 'طاولة واحدة.' : 'One Table.'}</span>
           </div>
           
           {/* Arabic Echo */}
-          <div className="text-right mt-3 mb-8 w-full">
-            <span className="font-serif text-[28px] md:text-[34px] font-normal text-[#C9A84C] tracking-[0.02em] opacity-90" dir="rtl">ثلاثة عوالم. طاولة واحدة.</span>
-          </div>
+          {isArabic && (
+            <div className="text-right mt-3 mb-8 w-full">
+              <span className="font-serif text-[28px] md:text-[34px] font-normal text-[#C9A84C] tracking-[0.02em] opacity-90" dir="rtl">ثلاثة عوالم. طاولة واحدة.</span>
+            </div>
+          )}
           
           {/* Divider */}
           <div className="flex justify-center mb-8 opacity-80">
@@ -115,9 +161,9 @@ export default function Menu() {
           
           {/* Body Text */}
           <div className="text-left flex flex-col">
-            <span className="text-[#D4C4A0] text-[19px] md:text-[21px] font-light italic mb-1">At the edge of the Dammam Corniche —</span>
-            <span className="text-[#D4C4A0] text-[19px] md:text-[21px] font-light italic mb-10">where three civilisations compete to feed you.</span>
-            <span className="font-serif text-[22px] md:text-[26px] tracking-[0.15em] text-[#C9A84C] font-normal uppercase">Explore thirty years of culinary theater.</span>
+            <span className="text-[#D4C4A0] text-[19px] md:text-[21px] font-light italic mb-1">{isArabic ? 'على طرف كورنيش الدمام —' : 'At the edge of the Dammam Corniche —'}</span>
+            <span className="text-[#D4C4A0] text-[19px] md:text-[21px] font-light italic mb-10">{isArabic ? 'وين ثلاث حضارات تتنافس عشان تطعمك.' : 'where three civilisations compete to feed you.'}</span>
+            <span className="font-serif text-[22px] md:text-[26px] tracking-[0.15em] text-[#C9A84C] font-normal uppercase">{isArabic ? 'اكتشف ثلاثين سنة من مسرح الطبخ.' : 'Explore thirty years of culinary theater.'}</span>
           </div>
         </div>
 
@@ -150,8 +196,8 @@ export default function Menu() {
             {/* Category Header */}
             <div className="flex justify-between items-start mb-12 relative z-10">
               <div>
-                <h2 className="text-4xl md:text-6xl font-serif text-gold mb-3 leading-tight">{category.title}</h2>
-                <p className="text-gray-300 font-serif italic text-xl md:text-2xl opacity-80">{category.subtitle}</p>
+                <h2 className="text-4xl md:text-6xl font-serif text-gold mb-3 leading-tight">{isArabic ? (categoryTitleAr[category.title] || category.title) : category.title}</h2>
+                <p className="text-gray-300 font-serif italic text-xl md:text-2xl opacity-80">{isArabic ? (categorySubtitleAr[category.subtitle] || category.subtitle) : category.subtitle}</p>
               </div>
               <category.icon className="text-gold/60 w-10 h-10 flex-shrink-0 ml-4 mt-1" />
             </div>
@@ -189,14 +235,14 @@ export default function Menu() {
                   className="flex items-center gap-2 text-gold hover:text-white transition-colors duration-300 font-serif text-lg cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-md px-2 py-1 -ml-2"
                 >
                   {expandedCategories[category.id] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                  {expandedCategories[category.id] ? 'Hide Additional Items' : 'View Additional Items'}
+                  {expandedCategories[category.id] ? (isArabic ? 'إخفاء العناصر الإضافية' : 'Hide Additional Items') : (isArabic ? 'عرض العناصر الإضافية' : 'View Additional Items')}
                 </button>
 
                 {expandedCategories[category.id] && (
                   <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {category.additional.map((group, gIdx) => (
                       <div key={gIdx}>
-                        <h4 className="text-white font-serif text-xl mb-4 border-b border-white/10 pb-2">{group.group}</h4>
+                        <h4 className="text-white font-serif text-xl mb-4 border-b border-white/10 pb-2">{isArabic ? (additionalGroupAr[group.group] || group.group) : group.group}</h4>
                         <ul className="space-y-3">
                           {group.items.map((item, iIdx) => (
                             <li key={iIdx} className="flex justify-between items-center text-sm md:text-base">
@@ -243,7 +289,7 @@ export default function Menu() {
               </svg>
             </div>
             <span className="font-display text-[16px] md:text-[19px] tracking-[0.4em] text-[#C9A84C] uppercase mb-6">FROM THE KITCHEN · من المطبخ</span>
-            <h2 className="text-[42px] md:text-[56px] font-serif italic text-white leading-tight">The Cup &amp; The Glass</h2>
+            <h2 className="text-[42px] md:text-[56px] font-serif italic text-white leading-tight">{isArabic ? 'الكوب والكأس' : 'The Cup &amp; The Glass'}</h2>
             
             <div className="flex justify-center mt-10 mb-2 w-full text-[#C9A84C] opacity-70 tracking-[0.25em] text-[11px]">
               ──────── ✦ ────────
@@ -256,7 +302,7 @@ export default function Menu() {
             {/* Brewed & Steeped */}
             <div className="flex flex-col gap-10">
               <div className="text-center mb-2">
-                <span className="font-display text-[15px] md:text-[17px] text-[#C9A84C] tracking-[0.3em] uppercase">Brewed &amp; Steeped</span>
+                <span className="font-display text-[15px] md:text-[17px] text-[#C9A84C] tracking-[0.3em] uppercase">{isArabic ? 'مشروبات ساخنة' : 'Brewed &amp; Steeped'}</span>
               </div>
               
               <div className="flex flex-col gap-6">
@@ -287,7 +333,7 @@ export default function Menu() {
                   <path d="M14 4 Q15 1 14 -1" stroke="#C9A84C" strokeWidth="0.6" strokeLinecap="round" fill="none" opacity="0.4"/>
                   <path d="M18 5 Q19 2 18 0" stroke="#C9A84C" strokeWidth="0.6" strokeLinecap="round" fill="none" opacity="0.4"/>
                 </svg>
-                <span className="font-display text-[15px] md:text-[17px] text-[#C9A84C] tracking-[0.3em] uppercase">The House Signatures</span>
+                <span className="font-display text-[15px] md:text-[17px] text-[#C9A84C] tracking-[0.3em] uppercase">{isArabic ? 'توقيعات المنزل' : 'The House Signatures'}</span>
               </div>
               
               <div className="flex flex-col gap-8">
@@ -342,8 +388,8 @@ export default function Menu() {
 
       {/* Footer Note */}
       <div className="max-w-4xl mx-auto px-4 text-center mt-32 text-white/70 text-lg md:text-xl font-sans space-y-4 mb-20">
-        <p className="tracking-wide">Prices are in Saudi Riyal (SAR) and inclusive of 15% VAT.</p>
-        <p className="tracking-wide italic">Please inform your server of any dietary requirements or allergies.</p>
+        <p className="tracking-wide">{isArabic ? 'الأسعار بالريال السعودي وتشمل 15% ضريبة القيمة المضافة.' : 'Prices are in Saudi Riyal (SAR) and inclusive of 15% VAT.'}</p>
+        <p className="tracking-wide italic">{isArabic ? 'يرجى إبلاغ النادل بأي متطلبات غذائية أو حساسية.' : 'Please inform your server of any dietary requirements or allergies.'}</p>
       </div>
     </div>
   );
