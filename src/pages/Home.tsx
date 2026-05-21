@@ -134,7 +134,7 @@ export default function Home() {
             >
               <Link 
                 to="/reservations" 
-                className="btn-press bg-gold text-rich-black px-12 py-4 rounded-full text-sm font-display tracking-[0.2em] uppercase inline-flex items-center justify-center cursor-pointer shadow-[0_0_20px_rgba(201,168,76,0.3)] hover:shadow-[0_0_30px_rgba(201,168,76,0.5)] font-bold transition-all duration-300"
+                className="btn-press btn-gold-glow bg-gold text-rich-black px-12 py-4 rounded-full text-sm font-display tracking-[0.2em] uppercase inline-flex items-center justify-center cursor-pointer shadow-[0_0_20px_rgba(201,168,76,0.3)] hover:shadow-[0_0_30px_rgba(201,168,76,0.5)] font-bold transition-all duration-300"
               >
                 <span className="btn-text">{isArabic ? 'احجز طاولتك' : 'Reserve an Experience'}</span>
               </Link>
@@ -703,7 +703,10 @@ export default function Home() {
               {isArabic ? 'أو تقعد على حافة الخليج العربي، فيه الهوا يحمل ريحة ثلاثين سنة من السهرات، وتخلّي ثلاث حضارات تتنافس عشان تعجبك.' : 'Or you could sit at the edge of the Arabian Gulf, where the air carries thirty years of extraordinary evenings — and let three civilizations compete to impress you.'}
             </p>
             <p className="text-white font-serif font-bold text-xl md:text-2xl italic mt-6">
-              {isArabic ? 'الخيار اسمه أوشيانا.' : 'That Option is Oceana.'}
+              {isArabic
+                ? <>الخيار اسمه <span className="text-gold gold-pulse-text">أوشيانا</span>.</>
+                : <>That Option is <span className="text-gold gold-pulse-text">Oceana</span>.</>
+              }
             </p>
           </motion.div>
 

@@ -69,7 +69,7 @@ export default function Navbar() {
             ))}
             <Link
               to="/reservations"
-              className="group relative overflow-hidden bg-gradient-to-br from-[#8B1A2B] via-[#A8203A] to-[#6B0F1A] text-white px-7 py-2.5 rounded-full font-display text-[11px] font-bold tracking-[0.22em] uppercase transition-all duration-500 hover:shadow-[0_8px_32px_rgba(139,26,43,0.5),0_0_20px_rgba(201,168,76,0.15)] hover:-translate-y-0.5 active:scale-95 before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent before:translate-x-[-100%] before:transition-transform before:duration-700 hover:before:translate-x-[100%]"
+              className="group relative overflow-hidden bg-gradient-to-br from-[#8B1A2B] via-[#A8203A] to-[#6B0F1A] text-white px-7 py-2.5 rounded-full font-display text-[11px] font-bold tracking-[0.22em] uppercase transition-all duration-500 hover:shadow-[0_8px_32px_rgba(139,26,43,0.5),0_0_20px_rgba(201,168,76,0.15)] hover:-translate-y-0.5 active:scale-95 before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent before:translate-x-[-100%] before:transition-transform before:duration-700 hover:before:translate-x-[100%] navbar-cta-pulse"
             >
               <span className="relative z-10">
                 {isArabic ? <span className="font-arabic text-[13px] tracking-normal">حجز طاولة</span> : 'Reserve Table'}
@@ -117,7 +117,7 @@ export default function Navbar() {
             <Link
               to="/reservations"
               onClick={() => setIsOpen(false)}
-              className="group relative overflow-hidden bg-gradient-to-br from-[#8B1A2B] via-[#A8203A] to-[#6B0F1A] text-white px-6 py-4 rounded-full text-center font-display text-[11px] font-bold tracking-[0.22em] uppercase transition-all duration-500 hover:shadow-[0_8px_32px_rgba(139,26,43,0.5),0_0_20px_rgba(201,168,76,0.15)] hover:-translate-y-0.5 active:scale-95 before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent before:translate-x-[-100%] before:transition-transform before:duration-700 hover:before:translate-x-[100%]"
+              className="group relative overflow-hidden bg-gradient-to-br from-[#8B1A2B] via-[#A8203A] to-[#6B0F1A] text-white px-6 py-4 rounded-full text-center font-display text-[11px] font-bold tracking-[0.22em] uppercase transition-all duration-500 hover:shadow-[0_8px_32px_rgba(139,26,43,0.5),0_0_20px_rgba(201,168,76,0.15)] hover:-translate-y-0.5 active:scale-95 before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent before:translate-x-[-100%] before:transition-transform before:duration-700 hover:before:translate-x-[100%] navbar-cta-pulse"
             >
               <span className="relative z-10">
                 {isArabic ? <span className="font-arabic text-[13px] tracking-normal">حجز طاولة</span> : 'Reserve Table'}
