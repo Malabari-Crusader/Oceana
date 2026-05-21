@@ -703,7 +703,7 @@ export default function Home() {
               {isArabic ? 'أو تقعد على حافة الخليج العربي، فيه الهوا يحمل ريحة ثلاثين سنة من السهرات، وتخلّي ثلاث حضارات تتنافس عشان تعجبك.' : 'Or you could sit at the edge of the Arabian Gulf, where the air carries thirty years of extraordinary evenings — and let three civilizations compete to impress you.'}
             </p>
             <p className="text-white font-serif font-bold text-xl md:text-2xl italic mt-6">
-              {isArabic ? 'الخيار الثاني اسمه أوشيانا.' : 'That second option is Oceana.'}
+              {isArabic ? 'الخيار اسمه أوشيانا.' : 'That Option is Oceana.'}
             </p>
           </motion.div>
 
