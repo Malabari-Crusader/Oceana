@@ -104,15 +104,14 @@ export default function Menu() {
       {/* Header Section */}
       <div className="relative pt-48 pb-40 mb-20 flex flex-col items-center justify-center overflow-hidden min-h-[70vh]">
         {/* Background Image */}
-        <div 
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: 'url("/Menu Background image.jpeg")',
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundAttachment: 'fixed'
-          }}
-        >
+          <div 
+            className="absolute inset-0 z-0"
+            style={{
+              backgroundImage: 'url("/Menu Background image.jpeg")',
+              backgroundPosition: 'center',
+              backgroundSize: 'cover'
+            }}
+          >
           {/* Overlay */}
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom right, rgba(10, 8, 6, 0.75) 0%, rgba(10, 8, 6, 0.35) 60%, rgba(10, 8, 6, 0.55) 100%)' }}></div>
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10, 8, 6, 0.6) 0%, transparent 35%)' }}></div>
