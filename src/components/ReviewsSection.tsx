@@ -143,7 +143,7 @@ export default function ReviewsSection() {
 
       <div className="reviews-footer">
         <span className="reviews-rating"><span className="rating-stars">★★★★½</span> &nbsp; {isArabic ? 'متوسط ٤٫٧ من أكثر من ١٤٠٠ تقييم' : '4.7 average across 1.4k+ reviews'}</span>
-        <a href="#" className="reviews-all">{isArabic ? 'عرض كل التقييمات ←' : 'VIEW ALL REVIEWS →'}</a>
+        <a href="https://www.google.com/search?q=oceana+restaurant+-+%D9%85%D8%B7%D8%B9%D9%85+%D8%A3%D9%88%D8%B4%D9%8A%D8%A7%D9%86%D8%A7+reviews" target="_blank" rel="noopener noreferrer" className="reviews-all">{isArabic ? 'عرض كل التقييمات ←' : 'VIEW ALL REVIEWS →'}</a>
       </div>
     </section>
   );
