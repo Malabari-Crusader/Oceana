@@ -4,11 +4,14 @@ import App from './App.tsx';
 import './index.css';
 
 import { HelmetProvider } from 'react-helmet-async';
+import { LanguageProvider } from './context/LanguageContext';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <HelmetProvider>
-      <App />
+      <LanguageProvider>
+        <App />
+      </LanguageProvider>
     </HelmetProvider>
   </StrictMode>,
 );

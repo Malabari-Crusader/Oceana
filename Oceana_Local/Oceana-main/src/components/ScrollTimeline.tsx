@@ -1,7 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { motion, useScroll, useSpring, useTransform } from 'motion/react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function ScrollTimeline() {
+  const { isArabic } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Track scroll progress through the entire timeline container
@@ -21,6 +23,16 @@ export default function ScrollTimeline() {
   const dotY = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
 
   useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    // Reset opacity on elements so they re-animate on language toggle
+    const allEntries = container.querySelectorAll<HTMLElement>('.timeline-text, .timeline-photo');
+    allEntries.forEach((el) => {
+      el.style.opacity = '0';
+      el.style.animation = 'none';
+    });
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -39,11 +51,10 @@ export default function ScrollTimeline() {
       { threshold: 0.2, rootMargin: "0px 0px -100px 0px" }
     );
 
-    const elements = containerRef.current?.querySelectorAll('.timeline-text, .timeline-photo');
-    elements?.forEach((el) => observer.observe(el));
+    allEntries.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, []);
+  }, [isArabic]);
 
   return (
     <section className="py-32 bg-[#0A0806] relative overflow-hidden" ref={containerRef}>

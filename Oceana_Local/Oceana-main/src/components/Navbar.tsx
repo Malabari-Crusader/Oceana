@@ -1,11 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Utensils } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Navbar() {
+  const { isArabic, toggleLanguage } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isArabic, setIsArabic] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -15,12 +16,6 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const toggleLanguage = () => {
-    setIsArabic(!isArabic);
-    document.documentElement.dir = !isArabic ? 'rtl' : 'ltr';
-    document.documentElement.lang = !isArabic ? 'ar' : 'en';
-  };
 
   const links = [
     { en: 'Menu', ar: 'القائمة', path: '/menu' },
